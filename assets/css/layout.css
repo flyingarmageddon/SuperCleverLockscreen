@@ -14,14 +14,22 @@
 
 .info_bar{
 	flex: 1;
-	max-width: 400px;
 	display: flex;
-	flex-direction: column;
-	align-items: center;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	max-width: 400px;
 	box-sizing: border-box;
 	padding: 10px;
 	color: white;    
 	background: rgba(0, 0, 0, 0.62);
-	/* background: burlywood;
-	background: linear-gradient(0deg, cyan, red); */
+}
+
+.info_bar > div, .info_bar > section{
+	flex: 1;
+}
+
+.power_buttons_container{
+	align-self: flex-end;
+	display: inline-flex;
+	justify-content: center;
 }
