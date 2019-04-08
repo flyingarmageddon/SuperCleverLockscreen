@@ -1,6 +1,7 @@
 app.ui = {
 	elements: {
-		container: document.getElementById("container")
+		login_area: document.querySelector(".login_area"),
+		info_bar: document.querySelector(".info_bar")
 	},
 
 	init: function(){
@@ -15,44 +16,56 @@ app.ui = {
 			app.ui.elements.power_buttons_container.appendChild(app.ui.elements["power_buttons_" + key]);
 		})
 
-		app.ui.elements.container.innerHTML = "";
+		app.ui.elements.login_area.innerHTML = "";
 		app.ui.elements.clock.innerHTML = "12:34";
 		app.ui.elements.hostname.innerHTML = window.lightdm.hostname;
 
 
-		app.ui.elements.container.appendChild(app.ui.elements.hostname);
-		app.ui.elements.container.appendChild(app.ui.elements.clock);
-		app.ui.elements.container.appendChild(app.ui.elements.power_buttons_container);
-		app.ui.elements.container.appendChild(app.ui.elements.users_container);
+		app.ui.elements.login_area.appendChild(app.ui.elements.hostname);
+		app.ui.elements.login_area.appendChild(app.ui.elements.clock);
+		app.ui.elements.login_area.appendChild(app.ui.elements.power_buttons_container);
+		app.ui.elements.login_area.appendChild(app.ui.elements.users_container);
+
+		//Mateusza brzydki kod
+
+		app.ui.elements.clock_box = app.utils.createEWC("div", ['clock_box']);
+
+		app.ui.elements.info_bar.appendChild(app.ui.elements.clock_box);
+		app.ui.elements.clock_box.innerHTML = `
+			<h1>${app.utils.getCurrentTime("hour")}:${app.utils.getCurrentTime("minute")}</h1>
+			<h2>${app.utils.getCurrentTime("day")} ${app.utils.getCurrentTime("month")} ${app.utils.getCurrentTime("year")}</h2>
+		`;
+
+		//end
 
 		app.ui.renderUsers();
 		return;
 
 
-		app.ui.elements.container.innerHTML += "I am running on: <b>" + window.lightdm.hostname + "</b><br>";
+		app.ui.elements.login_area.innerHTML += "I am running on: <b>" + window.lightdm.hostname + "</b><br>";
 		
-		app.ui.elements.container.innerHTML += "<hr>";
+		app.ui.elements.login_area.innerHTML += "<hr>";
 
 		Object.keys(window.lightdm.users).forEach(key => {
-			app.ui.elements.container.innerHTML += "Available user: <b>" + JSON.stringify(window.lightdm.users[key]) + "</b><br>";
+			app.ui.elements.login_area.innerHTML += "Available user: <b>" + JSON.stringify(window.lightdm.users[key]) + "</b><br>";
 		})
 		
-		app.ui.elements.container.innerHTML += "<hr>";
+		app.ui.elements.login_area.innerHTML += "<hr>";
 
 		Object.keys(window.lightdm.sessions).forEach(key => {
-			app.ui.elements.container.innerHTML += "Available session: <b>" + JSON.stringify(window.lightdm.sessions[key]) + "</b><br>";
+			app.ui.elements.login_area.innerHTML += "Available session: <b>" + JSON.stringify(window.lightdm.sessions[key]) + "</b><br>";
 		})
 		
-		app.ui.elements.container.innerHTML += "<hr>";
+		app.ui.elements.login_area.innerHTML += "<hr>";
 
 		Object.keys(window.lightdm.layouts).forEach(key => {
-			app.ui.elements.container.innerHTML += "Available keymap: <b>" + JSON.stringify(window.lightdm.layouts[key]) + "</b><br>";
+			app.ui.elements.login_area.innerHTML += "Available keymap: <b>" + JSON.stringify(window.lightdm.layouts[key]) + "</b><br>";
 		})
 		
-		app.ui.elements.container.innerHTML += "<hr>";
+		app.ui.elements.login_area.innerHTML += "<hr>";
 
 		Object.keys(window.lightdm.languages).forEach(key => {
-			app.ui.elements.container.innerHTML += "Available language: <b>" + JSON.stringify(window.lightdm.languages[key]) + "</b><br>";
+			app.ui.elements.login_area.innerHTML += "Available language: <b>" + JSON.stringify(window.lightdm.languages[key]) + "</b><br>";
 		})
 	},
 
