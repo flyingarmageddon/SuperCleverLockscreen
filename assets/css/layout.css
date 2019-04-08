@@ -1,0 +1,27 @@
+.container{
+	display: flex;
+	align-items: stretch;
+	width: 100%;
+	height: 100vh;
+}
+
+.login_area{
+	flex: 3;
+	display: flex;	
+    flex-direction: column;
+    justify-content: center;
+}
+
+.info_bar{
+	flex: 1;
+	max-width: 400px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	box-sizing: border-box;
+	padding: 10px;
+	color: white;    
+	background: rgba(0, 0, 0, 0.62);
+	/* background: burlywood;
+	background: linear-gradient(0deg, cyan, red); */
+}

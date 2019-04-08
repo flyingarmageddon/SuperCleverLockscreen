@@ -1,10 +1,13 @@
 app.ui = {
 	elements: {
+		background: document.querySelector(".background"),
 		login_area: document.querySelector(".login_area"),
 		info_bar: document.querySelector(".info_bar")
 	},
 
 	init: function(){
+		app.ui.loadBackground("./assets/media/default_bg.png", "image");
+
 		app.ui.elements.users_container = app.utils.createEWC("section", ["users_container"]);
 		app.ui.elements.power_buttons_container = app.utils.createEWC("section", ["power_buttons_container"]);
 		app.ui.elements.hostname = app.utils.createEWC("section", ["hostname"]);
@@ -66,6 +69,23 @@ app.ui = {
 		})
 	},
 
+	loadBackground: function(url, type = "image"){
+		if (type == "image"){
+			bgElement = document.createElement("img");
+		}else if (type == "video"){
+			bgElement = document.createElement("video");
+			bgElement.muted = true;
+			bgElement.autoplay = true;
+			bgElement.loop = true;
+		}else{
+			return false;
+		}
+
+		bgElement.src = url;
+		app.ui.elements.background.innerHTML = "";
+		app.ui.elements.background.appendChild(bgElement);
+		return true;
+	},
 
 	renderUser: function(userData){
 		user = app.utils.createEWC("div", ["user_item"]);
@@ -77,6 +97,14 @@ app.ui = {
 		user_password = app.utils.createEWC("input", ["user_password"]);
 
 		user_password.type = "password";
+
+		user_password.onfocus = function(){
+			app.ui.elements.background.classList.add("blur");
+		}
+
+		user_password.onblur = function(){
+			app.ui.elements.background.classList.remove("blur");
+		}
 
 		user_name.innerHTML = userData.name
 		user_nice_name.innerHTML = userData.display_name;
