@@ -12,11 +12,10 @@ var app = {
 
 		window.authentication_complete = () => {
 			if (lightdm.is_authenticated){
-				//TODO: UI - OK
-				app.ui.elements.container.classList.add("mega_blur");
+				app.ui.passwordFeedback(true);
 				lightdm.start_session();
 			}else{
-				//TODO: UI - Fail
+				app.ui.passwordFeedback(false);
 			}
 		}
 
