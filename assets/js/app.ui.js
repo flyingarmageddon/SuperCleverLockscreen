@@ -17,6 +17,10 @@ app.ui = {
 		app.ui.elements.power_buttons_container = app.utils.createEWC("section", ["power_buttons_container"]);
 		app.ui.elements.hostname = app.utils.createEWC("section", ["hostname"]);
 		
+		if (typeof app.weather != "undefined"){
+			app.ui.elements.weather_container = app.utils.createEWC("div", ["weather_container"]);
+		}
+		
 		Array("shutdown", "restart", "suspend", "hibernate").forEach(key => {
 			if (!lightdm[`can_${key}`]) return; //skip one in foreach
 			app.ui.elements["power_buttons_" + key] = app.utils.createEWC("img", ["power_button"]);
@@ -35,7 +39,13 @@ app.ui = {
 		app.ui.updateClock();
 		setInterval(app.ui.updateClock, 10000);
 
+		if (typeof app.weather != "undefined"){
+			app.ui.elements.info_bar.appendChild(app.ui.elements.weather_container);
+			app.weather.init();
+		}
+
 		app.ui.elements.info_bar.appendChild(app.ui.elements.power_buttons_container);
+
 
 		app.ui.renderUsers();
 	},

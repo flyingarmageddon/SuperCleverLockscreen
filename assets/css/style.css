@@ -3,6 +3,7 @@
 @import "clock.css";
 @import "background.css";
 @import "layout.css";
+@import "weather.css";
 @import "effects.css";
 
 html, body{
