@@ -1,6 +1,7 @@
 app.ui = {
 	elements: {
 		background: document.querySelector(".background"),
+		container: document.querySelector(".container"),
 		login_area: document.querySelector(".login_area"),
 		info_bar: document.querySelector(".info_bar")
 	},

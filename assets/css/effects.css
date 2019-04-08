@@ -1,3 +1,7 @@
 .blur{
 	filter: blur(3px) !important;
 }
+
+.mega_blur{
+	filter: blur(300px) !important;
+}

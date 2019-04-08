@@ -15,6 +15,7 @@ var app = {
 		window.authentication_complete = () => {
 			if (lightdm.is_authenticated){
 				//TODO: UI - OK
+				app.ui.elements.container.classList.add("mega_blur");
 				lightdm.start_session();
 			}else{
 				//TODO: UI - Fail
