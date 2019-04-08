@@ -41,34 +41,6 @@ app.ui = {
 		app.ui.elements.info_bar.appendChild(app.ui.elements.power_buttons_container);
 
 		app.ui.renderUsers();
-		return;
-
-
-		app.ui.elements.login_area.innerHTML += "I am running on: <b>" + window.lightdm.hostname + "</b><br>";
-		
-		app.ui.elements.login_area.innerHTML += "<hr>";
-
-		Object.keys(window.lightdm.users).forEach(key => {
-			app.ui.elements.login_area.innerHTML += "Available user: <b>" + JSON.stringify(window.lightdm.users[key]) + "</b><br>";
-		})
-		
-		app.ui.elements.login_area.innerHTML += "<hr>";
-
-		Object.keys(window.lightdm.sessions).forEach(key => {
-			app.ui.elements.login_area.innerHTML += "Available session: <b>" + JSON.stringify(window.lightdm.sessions[key]) + "</b><br>";
-		})
-		
-		app.ui.elements.login_area.innerHTML += "<hr>";
-
-		Object.keys(window.lightdm.layouts).forEach(key => {
-			app.ui.elements.login_area.innerHTML += "Available keymap: <b>" + JSON.stringify(window.lightdm.layouts[key]) + "</b><br>";
-		})
-		
-		app.ui.elements.login_area.innerHTML += "<hr>";
-
-		Object.keys(window.lightdm.languages).forEach(key => {
-			app.ui.elements.login_area.innerHTML += "Available language: <b>" + JSON.stringify(window.lightdm.languages[key]) + "</b><br>";
-		})
 	},
 
 	loadBackground: function(url, type = "image"){
@@ -87,6 +59,17 @@ app.ui = {
 		app.ui.elements.background.innerHTML = "";
 		app.ui.elements.background.appendChild(bgElement);
 		return true;
+	},
+
+	passwordFeedback: function(is_good = false){
+		if (is_good){
+			app.ui.elements.container.classList.add("mega_blur");
+		}else{
+			document.querySelector(".user_password").classList.add("shaking-red");
+			setTimeout(() => {
+				document.querySelector(".user_password").classList.remove("shaking-red");
+			}, 700);
+		}
 	},
 
 	renderUser: function(userData){

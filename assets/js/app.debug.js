@@ -51,6 +51,9 @@ app.debug = {
 			console.log("--------------------");
 			if (app.debug.fakeLightDM.is_authenticated){
 				console.log("  starting session  ");
+				setTimeout(() => {
+					document.body.innerHTML = "<h1>Session loaded.</h1>";
+				}, 500);
 			}else{
 				console.error(" not authenticated ")
 			}
