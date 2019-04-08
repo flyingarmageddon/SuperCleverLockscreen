@@ -8,7 +8,7 @@ COLOR_NONE='\033[0m'
 
 if [ $EUID -ne 0 ]; then
     echo "Warning! You have to run this script as root. Trying to run as root..."
-    sudo ./$0
+    sudo ./$0 $1
     exit 0
 fi
 
