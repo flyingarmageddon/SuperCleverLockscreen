@@ -7,6 +7,10 @@ app.ui = {
 	},
 
 	init: function(){
+
+		//TODO: add focus on password imput
+		//TODO: disable right-click, text selection 
+
 		app.ui.loadBackground("./assets/media/default_bg.png", "image");
 
 		app.ui.elements.users_container = app.utils.createEWC("section", ["users_container"]);
