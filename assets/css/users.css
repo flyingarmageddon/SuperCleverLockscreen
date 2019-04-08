@@ -1,0 +1,32 @@
+.users_container{
+	display: flex;
+}
+
+.user_item{
+	display: inline-block;
+	background: #333;
+	color: #eee;
+	width: 250px;
+	min-height: 200px;
+	margin: 5px;
+}
+.user_item > .user_image{
+	width: 250px;
+	height: auto;
+	min-height: 250px;
+	border-bottom: 1px solid rgb(73, 73, 73);
+}
+
+.user_nice_name{
+	font-size: 1.7em;
+	font-weight: 600;
+}
+
+.user_nice_name, .user_name, .user_info{
+	padding: 1px 5px;
+}
+
+.user_info{
+	color: rgb(165, 165, 165);
+	padding-bottom: 5px;
+}
