@@ -89,6 +89,7 @@ app.ui = {
 
 	renderUser: function(userData){
 		user = app.utils.createEWC("div", ["user_item"]);
+		user.userData = userData;
 
 		user_name = app.utils.createEWC("div", ["user_name"]);
 		user_nice_name = app.utils.createEWC("div", ["user_nice_name"]);
@@ -106,11 +107,22 @@ app.ui = {
 			app.ui.elements.background.classList.remove("blur");
 		}
 
+		user_password.addEventListener("keyup", function(event) {
+			if (event.keyCode === KEY.ENTER) {
+				if (this.value.length == 0){
+					console.log("Password length is zero.");
+					return;
+				}
+				userData = this.parentElement.userData;
+				app.login(userData.name, this.value);
+				event.preventDefault();
+			}
+		});
+
 		user_name.innerHTML = userData.name
 		user_nice_name.innerHTML = userData.display_name;
 
 		if (userData.image != null) {
-			console.log("Has image");
 			user_image.src = userData.image;
 		}else{
 			user_image.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mM0+g8AAWkBM2y7Yk0AAAAASUVORK5CYII=";
@@ -120,8 +132,6 @@ app.ui = {
 			user_info.innerHTML = "Zalogowany";
 		}	
 
-		// user.appendChild(user_image);
-		// user.appendChild(user_name);
 		user.appendChild(user_info);
 		user.appendChild(user_nice_name);
 		user.appendChild(user_password);
