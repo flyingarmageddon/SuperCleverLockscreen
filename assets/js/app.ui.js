@@ -7,7 +7,6 @@ app.ui = {
 	init: function(){
 		app.ui.elements.users_container = app.utils.createEWC("section", ["users_container"]);
 		app.ui.elements.power_buttons_container = app.utils.createEWC("section", ["power_buttons_container"]);
-		app.ui.elements.clock = app.utils.createEWC("section", ["clock"]);
 		app.ui.elements.hostname = app.utils.createEWC("section", ["hostname"]);
 		
 		Array("shutdown", "restart", "suspend", "hibernate").forEach(key => {
@@ -16,14 +15,10 @@ app.ui = {
 			app.ui.elements.power_buttons_container.appendChild(app.ui.elements["power_buttons_" + key]);
 		})
 
-		app.ui.elements.login_area.innerHTML = "";
-		app.ui.elements.clock.innerHTML = "12:34";
+		// app.ui.elements.login_area.innerHTML = "";
 		app.ui.elements.hostname.innerHTML = window.lightdm.hostname;
 
-
-		app.ui.elements.login_area.appendChild(app.ui.elements.hostname);
-		app.ui.elements.login_area.appendChild(app.ui.elements.clock);
-		app.ui.elements.login_area.appendChild(app.ui.elements.power_buttons_container);
+		// app.ui.elements.login_area.appendChild(app.ui.elements.hostname);
 		app.ui.elements.login_area.appendChild(app.ui.elements.users_container);
 
 		//Mateusza brzydki kod
@@ -37,6 +32,8 @@ app.ui = {
 		`;
 
 		//end
+		
+		app.ui.elements.info_bar.appendChild(app.ui.elements.power_buttons_container);
 
 		app.ui.renderUsers();
 		return;
@@ -77,6 +74,9 @@ app.ui = {
 		user_nice_name = app.utils.createEWC("div", ["user_nice_name"]);
 		user_image = app.utils.createEWC("img", ["user_image"]);
 		user_info = app.utils.createEWC("div", ["user_info"]);
+		user_password = app.utils.createEWC("input", ["user_password"]);
+
+		user_password.type = "password";
 
 		user_name.innerHTML = userData.name
 		user_nice_name.innerHTML = userData.display_name;
@@ -92,10 +92,11 @@ app.ui = {
 			user_info.innerHTML = "Zalogowany";
 		}	
 
-		user.appendChild(user_image);
-		user.appendChild(user_nice_name);
-		user.appendChild(user_name);
+		// user.appendChild(user_image);
+		// user.appendChild(user_name);
 		user.appendChild(user_info);
+		user.appendChild(user_nice_name);
+		user.appendChild(user_password);
 
 		return user;
 	},
@@ -104,8 +105,11 @@ app.ui = {
 	renderUsers: function(){
 		app.ui.elements.users_container.innerHTML = "";
 
-		Object.keys(window.lightdm.users).forEach(key => {
+		// Show only 1st user for now
+		app.ui.elements.users_container.appendChild(app.ui.renderUser(window.lightdm.users[Object.keys(window.lightdm.users)[0]]));
+		
+		/*Object.keys(window.lightdm.users).forEach(key => {
 			app.ui.elements.users_container.appendChild(app.ui.renderUser(window.lightdm.users[key]));
-		})
+		})*/
 	}
 };

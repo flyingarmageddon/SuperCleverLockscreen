@@ -29,6 +29,8 @@ body{
 .login_area{
 	flex: 3;
 	display: flex;	
+    flex-direction: column;
+    justify-content: center;
 }
 
 .info_bar{
