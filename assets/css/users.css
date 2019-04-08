@@ -26,12 +26,12 @@
 
 .user_info{
 	font-size: 1em;
-	color: #595959;
+	color: rgba(255, 255, 255, 0.65);
     margin-bottom: -2px;
 }
 
 input.user_password{
-	caret-color: rgb(112, 112, 112);
+	caret-color: #595959;
     border-radius: 3px;
     border: none;
     font-size: 2.1em;
