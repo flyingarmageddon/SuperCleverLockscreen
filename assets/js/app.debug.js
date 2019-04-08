@@ -35,6 +35,9 @@ app.debug = {
 		shutdown: function(){return true},
 		start_session: function(session){},
 		suspend: function(){return true},
-		users: ["test_autologin", "test_user"]
+		users: [
+			{ name: "test_autologin", display_name: "Test Autologin" },
+			{ name: "test_user", display_name: "Test User" }
+		]
 	}
 };
