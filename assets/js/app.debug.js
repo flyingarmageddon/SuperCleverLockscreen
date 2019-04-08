@@ -1,6 +1,9 @@
 app.debug = {
 	fakeLightDM: {
-		authenticate: function(username){},
+		authenticate: function(username){
+			app.debug.fakeLightDM.in_authentication = true;
+			setTimeout(function(){window.show_prompt()}, 300);
+		},
 		authenticate_as_guest: function(username){},
 		authentication_user: null,
 		autologin_guest: true,
@@ -26,14 +29,33 @@ app.debug = {
 		layouts: ["pl-PL", "en-US"],
 		lock_hint: true,
 		num_users: 2,
-		respond: function(response){},
+		respond: function(response){
+			if (response == "test"){
+				app.debug.fakeLightDM.is_authenticated = true;
+			}else{
+				app.debug.fakeLightDM.is_authenticated = false;
+			}
+
+			setTimeout(function(){
+			app.debug.fakeLightDM.in_authentication = false;
+				window.authentication_complete();
+			}, 100)
+		},
 		restart: function(){return true}, 
 		select_guest_hint: false,
 		select_user_hint: "test_user",
 		sessions: ["XSession", "Xterm"],
 		set_language: function(lang){},
 		shutdown: function(){return true},
-		start_session: function(session){},
+		start_session: function(session){
+			console.log("--------------------");
+			if (app.debug.fakeLightDM.is_authenticated){
+				console.log("  starting session  ");
+			}else{
+				console.error(" not authenticated ")
+			}
+			console.log("--------------------");
+		},
 		suspend: function(){return true},
 		users: [
 			{ name: "test_user", display_name: "Test User", image: null, logged_in: true },

@@ -108,7 +108,7 @@ app.ui = {
 		}
 
 		user_password.addEventListener("keyup", function(event) {
-			if (event.keyCode === KEY.ENTER) {
+			if (event.keyCode === 13) {
 				if (this.value.length == 0){
 					console.log("Password length is zero.");
 					return;
