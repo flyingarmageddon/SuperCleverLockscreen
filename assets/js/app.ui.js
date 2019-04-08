@@ -26,18 +26,11 @@ app.ui = {
 		// app.ui.elements.login_area.appendChild(app.ui.elements.hostname);
 		app.ui.elements.login_area.appendChild(app.ui.elements.users_container);
 
-		//Mateusza brzydki kod
-
 		app.ui.elements.clock_box = app.utils.createEWC("div", ['clock_box']);
-
 		app.ui.elements.info_bar.appendChild(app.ui.elements.clock_box);
-		app.ui.elements.clock_box.innerHTML = `
-			<h1>${app.utils.getCurrentTime("hour")}:${app.utils.getCurrentTime("minute")}</h1>
-			<h2>${app.utils.getCurrentTime("day")} ${app.utils.getCurrentTime("month")} ${app.utils.getCurrentTime("year")}</h2>
-		`;
+		app.ui.updateClock();
+		setInterval(app.ui.updateClock, 10000);
 
-		//end
-		
 		app.ui.elements.info_bar.appendChild(app.ui.elements.power_buttons_container);
 
 		app.ui.renderUsers();
@@ -134,5 +127,13 @@ app.ui = {
 		/*Object.keys(window.lightdm.users).forEach(key => {
 			app.ui.elements.users_container.appendChild(app.ui.renderUser(window.lightdm.users[key]));
 		})*/
+	},
+
+	updateClock: function(){
+		time = app.utils.getCurrentTime();
+		app.ui.elements.clock_box.innerHTML = `
+			<h1>${time.hour}:${time.minute}</h1>
+			<h2>${time.day} ${time.month} ${time.year}</h2>
+		`;
 	}
 };

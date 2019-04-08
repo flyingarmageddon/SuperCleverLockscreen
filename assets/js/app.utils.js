@@ -6,7 +6,7 @@ app.utils = {
 		}
 		return element;
 	},
-	getCurrentTime: function (what){
+	getCurrentTime: function (){
 		var date = new Date();
 
 		month_name = {
@@ -34,32 +34,14 @@ app.utils = {
 			6: "saturday",
 		}
 
-
-		switch (what) {
-			case "second":
-				return String(date.getSeconds()).padStart(2, '0');
-			
-			case "minute":
-				return String(date.getMinutes()).padStart(2, '0');
-
-			case "hour":
-				return String(date.getHours()).padStart(2, '0');
-
-			case "day":
-				return String(date.getDate()).padStart(2, '0');
-
-			case "month":
-				var month = String(date.getMonth() +1);
-				return month_name[month];
-			
-			case "year":
-				return String(date.getFullYear());
-			
-			case "week_day":
-				var day = String(date.getDay());
-				return day_name[day];
+		return {
+			second: String(date.getSeconds()).padStart(2, '0'),
+			minute: String(date.getMinutes()).padStart(2, '0'),
+			hour: String(date.getHours()).padStart(2, '0'),
+			day: String(date.getDate()).padStart(2, '0'),
+			month: month_name[date.getMonth() + 1],
+			year: String(date.getFullYear()),
+			week_day: day_name[date.getDay()],
 		}
-
-		return false;
 	}
 };
