@@ -1,6 +1,4 @@
-var app = {
-	debug: false,
-	
+var app = {	
 	init: function(){
 		if (typeof window.lightdm == "undefined"){
 			window.lightdm = app.debug.fakeLightDM;
