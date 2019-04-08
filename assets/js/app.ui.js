@@ -13,8 +13,9 @@ app.ui = {
 		app.ui.elements.hostname = app.utils.createEWC("section", ["hostname"]);
 		
 		Array("shutdown", "restart", "suspend", "hibernate").forEach(key => {
-			app.ui.elements["power_buttons_" + key] = app.utils.createEWC("button", ["power_button"]);
-			app.ui.elements["power_buttons_" + key].innerHTML = key;
+			if (!lightdm[`can_${key}`]) return; //skip one in foreach
+			app.ui.elements["power_buttons_" + key] = app.utils.createEWC("img", ["power_button"]);
+			app.ui.elements["power_buttons_" + key].src = `./assets/media/icons/${key}.png`;
 			app.ui.elements.power_buttons_container.appendChild(app.ui.elements["power_buttons_" + key]);
 		})
 

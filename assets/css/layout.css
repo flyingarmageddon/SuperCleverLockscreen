@@ -25,11 +25,18 @@
 }
 
 .info_bar > div, .info_bar > section{
-	flex: 1;
+	flex: 1 0 50%;
 }
 
 .power_buttons_container{
 	align-self: flex-end;
 	display: inline-flex;
 	justify-content: center;
+	margin-bottom: 20px;
+}
+
+.power_button{
+	height: 2em;
+	margin: 10px;
+	cursor: pointer;
 }
