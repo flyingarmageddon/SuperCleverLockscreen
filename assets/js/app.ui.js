@@ -68,9 +68,9 @@ app.ui = {
 		user_name.innerHTML = userData.name
 		user_nice_name.innerHTML = userData.display_name;
 
-		if (userData.user_image != null) {
+		if (userData.image != null) {
 			console.log("Has image");
-			user_image.src = userData.user_image;
+			user_image.src = userData.image;
 		}else{
 			user_image.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mM0+g8AAWkBM2y7Yk0AAAAASUVORK5CYII=";
 		}
