@@ -42,6 +42,17 @@ html, body{
 
 .clock_box{
 	text-align: center;
+	line-height: 0.95;
+}
+
+.clock_box > h1{
+	margin: 0;
+	font-size: 7em;
 	font-weight: bold;
+}
+
+.clock_box > h2{
+	margin: 0;
+	font-size: 2em;
 }
 
