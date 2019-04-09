@@ -13,12 +13,15 @@ app.debug = {
 		can_restart: true,
 		can_shutdown: true,
 		can_suspend: true,
+		hibernate: function(){console.warn("DEBUG: hibernate");},
+		restart: function(){console.warn("DEBUG: restart");}, 
+		shutdown: function(){console.warn("DEBUG: shutdown");},
+		suspend: function(){console.warn("DEBUG: suspend");},
 		cancel_authentication: function(){},
 		cancel_autologin: function(){},
 		default_session: "XSession",
 		get_hint: function(name){return "Example hint."},
 		has_guest_account: true,
-		hibernate: function(){return true},
 		hide_users: false,
 		hostname: "super-hostname.lan",
 		in_authentication: false,
@@ -41,12 +44,10 @@ app.debug = {
 				window.authentication_complete();
 			}, 100)
 		},
-		restart: function(){return true}, 
 		select_guest_hint: false,
 		select_user_hint: "test_user",
 		sessions: ["XSession", "Xterm"],
 		set_language: function(lang){},
-		shutdown: function(){return true},
 		start_session: function(session){
 			console.log("--------------------");
 			if (app.debug.fakeLightDM.is_authenticated){
@@ -59,7 +60,6 @@ app.debug = {
 			}
 			console.log("--------------------");
 		},
-		suspend: function(){return true},
 		users: [
 			{ name: "test_user", display_name: "Test User", image: null, logged_in: true },
 			{ name: "test_autologin", display_name: "Test Autologin", image: "http://placekitten.com/300/300", logged_in: false }

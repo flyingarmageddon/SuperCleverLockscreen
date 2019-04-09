@@ -21,9 +21,16 @@ app.ui = {
 		}
 		
 		Array("shutdown", "restart", "suspend", "hibernate").forEach(key => {
-			if (!lightdm[`can_${key}`]) return; //skip one in foreach
+			if (!lightdm[`can_${key}`]) return; //Action is not allowed - skip adding it
 			app.ui.elements["power_buttons_" + key] = app.utils.createEWC("img", ["power_button"]);
 			app.ui.elements["power_buttons_" + key].src = `./assets/media/icons/${key}.png`;
+			app.ui.elements["power_buttons_" + key].action = lightdm[key];
+			app.ui.elements["power_buttons_" + key].desc = key;
+			app.ui.elements["power_buttons_" + key].onclick = function(){
+				if (confirm(`Are you sure you want to ${this.desc} your PC?`)){
+					this.action();
+				}
+			}
 			app.ui.elements.power_buttons_container.appendChild(app.ui.elements["power_buttons_" + key]);
 		})
 
