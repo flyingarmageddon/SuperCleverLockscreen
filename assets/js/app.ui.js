@@ -92,7 +92,7 @@ app.ui = {
 
 			app.ui.users.renderAll();
 			app.ui.elements.users_container.appendChild(app.ui.users.renderSingle({another_user: true}));
-			document.querySelector(".user_password").focus();
+			document.querySelector(".user_item:not(.collapsed) input").focus();
 		},
 
 		renderSingle: function(userData){
@@ -207,6 +207,8 @@ app.ui = {
 				user_el.classList.remove("collapsed");
 				user_el.expanded = true;
 			}
+			
+			document.querySelector(".user_item:not(.collapsed) input").focus();
 		},
 
 		unselect: function(){
