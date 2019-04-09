@@ -43,7 +43,7 @@ app.ui = {
 		app.ui.elements.info_bar.appendChild(app.ui.elements.power_buttons_container);
 
 
-		app.ui.renderUsers();
+		app.ui.users.init();
 	},
 
 	loadBackground: function(url, type = "image"){
@@ -79,11 +79,111 @@ app.ui = {
 	},
 
 	users: {
-		init: function(){},
-		renderSingle: function(userData){},
-		renderAll: function(){},
+		init: function(){
+			app.ui.elements.users_container.innerHTML = "";
+
+			app.ui.users.renderAll();
+			app.ui.elements.users_container.appendChild(app.ui.users.renderSingle({another_user: true}));
+			document.querySelector(".user_password").focus();
+		},
+
+		renderSingle: function(userData){
+			user = app.utils.createEWC("div", userData.is_default ? ["user_item"] : ["user_item", "collapsed"]);
+			user.userData = userData;
+			user.expanded = userData.is_default;
+			if (user.expanded){
+				document.querySelector(".users_container").classList.add("is_active");
+			}
+	
+			user.onclick = app.ui.users.select;
+	
+			if (userData.another_user){
+				user_nice_name = app.utils.createEWC("div", ["user_nice_name"]);
+				user_nice_name.innerHTML = "Another user"
+				user_name = app.utils.createEWC("input", ["user_name"]);
+				user_name.placeholder = "Username";
+				user.userData.user_element = user_name;
+			}else{
+				user.userData = userData;
+		
+				user_name = app.utils.createEWC("div", ["user_name"]);
+				user_nice_name = app.utils.createEWC("div", ["user_nice_name"]);
+				user_image = app.utils.createEWC("img", ["user_image"]);
+				user_info = app.utils.createEWC("div", ["user_info"]);
+	
+				user_name.innerHTML = userData.name
+				user_nice_name.innerHTML = userData.display_name;
+		
+				if (userData.image != null) {
+					user_image.src = userData.image;
+				}else{
+					user_image.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mM0+g8AAWkBM2y7Yk0AAAAASUVORK5CYII=";
+				}
+		
+				if (userData.logged_in){
+					user_info.innerHTML = "Zalogowany";
+				}	
+			}
+	
+			user_password = app.utils.createEWC("input", ["user_password"]);
+			user_password.type = "password";
+			user_password.onfocus = () => {app.ui.elements.background.classList.add("blur");}
+			user_password.onblur =  () => {app.ui.elements.background.classList.remove("blur");}
+	
+			user_password.addEventListener("keyup", function(event) {
+				if (event.keyCode === 13) {
+					userData = this.parentElement.userData;
+					if (userData.another_user){
+						app.login(userData.user_element.value, this.value);
+					}else{
+						app.login(userData.name, this.value);
+					}
+					event.preventDefault();
+				}
+			});
+
+			user.appendChild(user_info);
+			user.appendChild(user_nice_name);
+
+			if (userData.another_user){
+				user_password.placeholder = "Password";
+				user.appendChild(user_name);
+			}
+
+			user.appendChild(user_password);
+			
+			return user;
+		},
+
+		renderAll: function(){
+			default_user = false;
+
+			if (Object.keys(window.lightdm.users).length == 1){
+				default_user = window.lightdm.users[Object.keys(window.lightdm.users)[0]].username;
+			}else if (lightdm.select_user_hint != null){
+				default_user = lightdm.select_user_hint;
+			}
+
+			Object.keys(window.lightdm.users).forEach(key => {
+				user = window.lightdm.users[key];
+				user.other = false;
+
+				if (default_user === false && user.logged_in){
+					user.is_default = true;
+				}else{
+					if (typeof user.username == "undefined"){
+						user.username = user.name;
+					}
+					user.is_default = (user.username == default_user);
+				}
+				
+				app.ui.elements.users_container.appendChild(app.ui.users.renderSingle(user));
+			});
+		},
+
 		select: function(e){
 			user_el = null;
+
 			if (e.target.className.indexOf("user_item") == -1 && e.target.parentElement.className.indexOf("user_item") != -1){
 				user_el = e.target.parentElement;
 			}else if (e.target.className.indexOf("user_item") != -1){
@@ -95,119 +195,22 @@ app.ui = {
 			document.querySelector(".users_container").classList.add("is_active");
 			
 			if (!user_el.expanded){
-				user_els = user_el.parentElement.children;
-				
-				for (var i = 0; i < user_els.length; i++){
-					if ((user_els[i].className.indexOf("collapsed") == -1) && user_els[i] != user_el){
-						user_els[i].classList.add("collapsed");
-						user_els[i].expanded = false;
-					}
-				}
+				app.ui.users.unselect();
 				user_el.classList.remove("collapsed");
 				user_el.expanded = true;
 			}
 		},
-		unselect: function(){}
-	},
 
-	renderUser: function(userData){
-		user = app.utils.createEWC("div", userData.is_default ? ["user_item"] : ["user_item", "collapsed"]);
-		user.userData = userData;
-		user.expanded = userData.is_default;
-		if (user.expanded){
-			document.querySelector(".users_container").classList.add("is_active");
-		}
+		unselect: function(){
+			user_els = user_el.parentElement.children;
 
-		user.onclick = app.ui.users.select;
-
-		if (userData.another_user){
-			user_nice_name = app.utils.createEWC("div", ["user_nice_name"]);
-			user_nice_name.innerHTML = "Another user"
-			user_name = app.utils.createEWC("input", ["user_name"]);
-			user_name.placeholder = "Username";
-			user.userData.user_element = user_name;
-		}else{
-			user.userData = userData;
-	
-			user_name = app.utils.createEWC("div", ["user_name"]);
-			user_nice_name = app.utils.createEWC("div", ["user_nice_name"]);
-			user_image = app.utils.createEWC("img", ["user_image"]);
-			user_info = app.utils.createEWC("div", ["user_info"]);
-
-			user_name.innerHTML = userData.name
-			user_nice_name.innerHTML = userData.display_name;
-	
-			if (userData.image != null) {
-				user_image.src = userData.image;
-			}else{
-				user_image.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mM0+g8AAWkBM2y7Yk0AAAAASUVORK5CYII=";
-			}
-	
-			if (userData.logged_in){
-				user_info.innerHTML = "Zalogowany";
-			}	
-	
-		}
-
-		user_password = app.utils.createEWC("input", ["user_password"]);
-		user_password.type = "password";
-
-		user_password.onfocus = () => {app.ui.elements.background.classList.add("blur");}
-		user_password.onblur =  () => {app.ui.elements.background.classList.remove("blur");}
-
-		
-		user_password.addEventListener("keyup", function(event) {
-			if (event.keyCode === 13) {
-				userData = this.parentElement.userData;
-				if (userData.another_user){
-					app.login(userData.user_element.value, this.value);
-				}else{
-					app.login(userData.name, this.value);
+			for (var i = 0; i < user_els.length; i++){
+				if ((user_els[i].className.indexOf("collapsed") == -1) && user_els[i] != user_el){
+					user_els[i].classList.add("collapsed");
+					user_els[i].expanded = false;
 				}
-				event.preventDefault();
 			}
-		});
-		user.appendChild(user_info);
-		user.appendChild(user_nice_name);
-		if (userData.another_user){
-			user_password.placeholder = "Password";
-			user.appendChild(user_name);
 		}
-		user.appendChild(user_password);
-		return user;
-	},
-
-
-	renderUsers: function(){
-		app.ui.elements.users_container.innerHTML = "";
-		default_user = false;
-
-		if (Object.keys(window.lightdm.users).length == 1){
-			default_user = window.lightdm.users[Object.keys(window.lightdm.users)[0]].username;
-		}else if (lightdm.select_user_hint != null){
-			default_user = lightdm.select_user_hint;
-		}
-
-		Object.keys(window.lightdm.users).forEach(key => {
-			user = window.lightdm.users[key];
-			user.other = false;
-
-			if (default_user === false && user.logged_in){
-				user.is_default = true;
-			}else{
-				if (typeof user.username == "undefined"){
-					user.username = user.name;
-				}
-				user.is_default = (user.username == default_user);
-			}
-			
-			app.ui.elements.users_container.appendChild(app.ui.renderUser(user));
-		})
-
-		app.ui.elements.users_container.appendChild(app.ui.renderUser({another_user: true}));
-
-		document.querySelector(".user_password").focus();
-
 	},
 
 	clock: {
