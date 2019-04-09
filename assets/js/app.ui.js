@@ -68,6 +68,9 @@ app.ui = {
 		if (is_good){
 			app.ui.elements.container.classList.add("mega_blur");
 		}else{
+			if (document.querySelector(".user_password").className.indexOf("shaking-red") != -1){
+				return
+			}
 			document.querySelector(".user_password").classList.add("shaking-red");
 			setTimeout(() => {
 				document.querySelector(".user_password").classList.remove("shaking-red");
