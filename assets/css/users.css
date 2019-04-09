@@ -1,5 +1,6 @@
 .users_container{
 	display: flex;
+    flex-direction: column;
 }
 
 .user_item{
@@ -7,7 +8,8 @@
 	margin: 5px 40px;
 	padding: 5px;
 	font-size: 1em;
-    text-shadow: 0px 0px 20px black;
+	text-shadow: 0px 0px 20px black;
+	cursor: default;
 }
 
 /*
@@ -39,5 +41,30 @@ input.user_password{
 	color: #eee;
 	padding: 5px;
 	outline: none !important;
+    display: block;
+	max-height: 100px;
+	transition: 0.2s all;
     /* box-shadow: 0px 0px 20px 1px black; */
+}
+
+
+
+.user_item.collapsed > input.user_password,
+.user_item.collapsed > .user_info{
+    max-height: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.user_item.collapsed > .user_nice_name{
+	color: rgba(228, 228, 228, 0.75);
+}
+
+.user_item.collapsed:hover > .user_nice_name{
+	color: rgb(241, 241, 241);
+	cursor: pointer;
+}
+
+.users_container.is_active > .user_item.collapsed > .user_nice_name{
+	color: rgba(228, 228, 228, 0.4);
 }
