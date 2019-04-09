@@ -10,7 +10,8 @@ app.ui = {
 		//TODO: add focus on password imput
 		//TODO: disable right-click, text selection 
 
-		app.ui.loadBackground("./assets/media/default_bg.png", "image");
+		app.ui.background.updateList();
+		app.ui.background.load();
 
 		app.ui.elements.users_container = app.utils.createEWC("section", ["users_container"]);
 		app.ui.elements.power_buttons_container = app.utils.createEWC("section", ["power_buttons_container"]);
@@ -52,24 +53,6 @@ app.ui = {
 
 
 		app.ui.users.init();
-	},
-
-	loadBackground: function(url, type = "image"){
-		if (type == "image"){
-			bgElement = document.createElement("img");
-		}else if (type == "video"){
-			bgElement = document.createElement("video");
-			bgElement.muted = true;
-			bgElement.autoplay = true;
-			bgElement.loop = true;
-		}else{
-			return false;
-		}
-
-		bgElement.src = url;
-		app.ui.elements.background.innerHTML = "";
-		app.ui.elements.background.appendChild(bgElement);
-		return true;
 	},
 
 	passwordFeedback: function(is_good = false){
@@ -239,6 +222,85 @@ app.ui = {
 				<h1>${time.hour}:${time.minute}</h1>
 				<h2>${time.day} ${time.month} ${time.year}</h2>
 			`;
+		}
+	},
+
+	background: {
+		list: [],
+		extensions: {
+			image:
+				[
+					"jpg",
+					"jpeg",
+					"png",
+					"gif"
+				],
+			video:
+				[
+					"mp4"
+				]
+		},
+
+		isValidImage: function (file) {
+			var file_extension = file.split(".").pop().toLowerCase();
+			if (app.ui.background.extensions["image"].indexOf(file_extension) >= 0){
+				return true;
+			}
+			return false;
+		},
+
+		isValidVideo: function (file) {
+			var file_extension = file.split(".").pop().toLowerCase();
+			if (app.ui.background.extensions["video"].indexOf(file_extension) >= 0) {
+				return true;
+			}
+			return false;
+		},
+
+		updateList: function () {
+			var file_extension;
+			var valid_extension = app.ui.background.extensions["image"].concat(app.ui.background.extensions["video"]);
+			app.ui.background.list = [];
+
+			theme_utils.dirlist('/usr/share/lightdm-webkit/themes/supercleverlockscreen/assets/media/backgrounds', false).forEach(file => {
+				file_extension = file.split(".").pop().toLowerCase();
+				if ((valid_extension.indexOf(file_extension) >= 0)){
+					app.ui.background.list.push(file);
+				}
+			});
+		},
+		
+		load: function (url = "random", onlyoftype = false) {
+			var file_extension;
+			var background_list = app.ui.background.list;
+			if (url == "random"){
+				if (onlyoftype === "image") background_list = background_list.filter(app.ui.background.isValidImage);
+				else if (onlyoftype === "video") background_list = background_list.filter(app.ui.background.isValidVideo);
+				else if (onlyoftype !== false) return false;
+				
+				if (background_list.length == 0){
+					app.ui.background.load("assets/media/default_bg.png");
+					return true;
+				}
+				url = background_list[Math.floor(Math.random() * background_list.length)];
+			}
+			file_extension = url.split(".").pop().toLowerCase();
+			if (app.ui.background.extensions["image"].indexOf(file_extension) >= 0) file_extension = "image";
+			else if (app.ui.background.extensions["video"].indexOf(file_extension) >= 0) file_extension = "video";
+			else return false;
+
+			if (file_extension == "image"){
+				bgElement = document.createElement("img");
+			} else {
+				bgElement = document.createElement("video");
+				bgElement.muted = true;
+				bgElement.autoplay = true;
+				bgElement.loop = true;
+			}
+			bgElement.src = url;
+			app.ui.elements.background.innerHTML = "";
+			app.ui.elements.background.appendChild(bgElement);
+			return true;
 		}
 	}
 };
