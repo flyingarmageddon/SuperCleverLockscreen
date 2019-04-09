@@ -7,7 +7,6 @@ app.ui = {
 	},
 
 	init: function(){
-
 		//TODO: add focus on password imput
 		//TODO: disable right-click, text selection 
 
@@ -34,10 +33,7 @@ app.ui = {
 		// app.ui.elements.login_area.appendChild(app.ui.elements.hostname);
 		app.ui.elements.login_area.appendChild(app.ui.elements.users_container);
 
-		app.ui.elements.clock_box = app.utils.createEWC("div", ['clock_box']);
-		app.ui.elements.info_bar.appendChild(app.ui.elements.clock_box);
-		app.ui.updateClock();
-		setInterval(app.ui.updateClock, 10000);
+		app.ui.clock.init();
 
 		if (typeof app.weather != "undefined"){
 			app.ui.elements.info_bar.appendChild(app.ui.elements.weather_container);
@@ -143,11 +139,22 @@ app.ui = {
 		})*/
 	},
 
-	updateClock: function(){
-		time = app.utils.getCurrentTime();
-		app.ui.elements.clock_box.innerHTML = `
-			<h1>${time.hour}:${time.minute}</h1>
-			<h2>${time.day} ${time.month} ${time.year}</h2>
-		`;
+	clock: {
+		init: function(){
+			app.ui.clock.element = app.utils.createEWC("div", ['clock_box']);
+			app.ui.clock.update();
+			
+			app.ui.elements.clock_box = app.ui.clock.element;
+			app.ui.elements.info_bar.appendChild(app.ui.elements.clock_box);
+			setInterval(app.ui.clock.update, 10000);
+		},
+
+		update: function(){
+			time = app.utils.getCurrentTime();
+			app.ui.clock.element.innerHTML = `
+				<h1>${time.hour}:${time.minute}</h1>
+				<h2>${time.day} ${time.month} ${time.year}</h2>
+			`;
+		}
 	}
 };
