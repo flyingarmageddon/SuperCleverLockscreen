@@ -32,7 +32,7 @@
     margin-bottom: -2px;
 }
 
-input.user_password{
+input.user_password, input.user_name{
 	caret-color: #595959;
     border-radius: 3px;
     border: none;
@@ -44,12 +44,18 @@ input.user_password{
     display: block;
 	max-height: 100px;
 	transition: 0.2s all;
+	margin-bottom: 5px;
     /* box-shadow: 0px 0px 20px 1px black; */
 }
 
+input.user_password::placeholder, input.user_name::placeholder {
+	color: rgba(0, 0, 0, 0.712);
+	transform: scale(0.5);
+	transform-origin: 0% 50%;
+}
 
 
-.user_item.collapsed > input.user_password,
+.user_item.collapsed > input,
 .user_item.collapsed > .user_info{
     max-height: 0;
     padding: 0;

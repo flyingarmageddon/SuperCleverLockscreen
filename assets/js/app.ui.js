@@ -98,23 +98,21 @@ app.ui = {
 				user_els = user_el.parentElement.children;
 				
 				for (var i = 0; i < user_els.length; i++){
-					console.log(user_els[i].className);
 					if ((user_els[i].className.indexOf("collapsed") == -1) && user_els[i] != user_el){
 						user_els[i].classList.add("collapsed");
 						user_els[i].expanded = false;
 					}
 				}
-
 				user_el.classList.remove("collapsed");
 				user_el.expanded = true;
 			}
-			console.log(user_el);
 		},
 		unselect: function(){}
 	},
 
 	renderUser: function(userData){
 		user = app.utils.createEWC("div", userData.is_default ? ["user_item"] : ["user_item", "collapsed"]);
+		user.userData = userData;
 		user.expanded = userData.is_default;
 		if (user.expanded){
 			document.querySelector(".users_container").classList.add("is_active");
@@ -126,6 +124,8 @@ app.ui = {
 			user_nice_name = app.utils.createEWC("div", ["user_nice_name"]);
 			user_nice_name.innerHTML = "Another user"
 			user_name = app.utils.createEWC("input", ["user_name"]);
+			user_name.placeholder = "Username";
+			user.userData.user_element = user_name;
 		}else{
 			user.userData = userData;
 	
@@ -158,13 +158,9 @@ app.ui = {
 		
 		user_password.addEventListener("keyup", function(event) {
 			if (event.keyCode === 13) {
-				if (this.value.length == 0){
-					console.log("Password length is zero.");
-					return;
-				}
 				userData = this.parentElement.userData;
-				if (userData.other){
-					alert("TODO");
+				if (userData.another_user){
+					app.login(userData.user_element.value, this.value);
 				}else{
 					app.login(userData.name, this.value);
 				}
@@ -173,6 +169,10 @@ app.ui = {
 		});
 		user.appendChild(user_info);
 		user.appendChild(user_nice_name);
+		if (userData.another_user){
+			user_password.placeholder = "Password";
+			user.appendChild(user_name);
+		}
 		user.appendChild(user_password);
 		return user;
 	},
