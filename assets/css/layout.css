@@ -36,10 +36,19 @@
 	display: inline-flex;
 	justify-content: center;
 	margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
 .power_button{
 	height: 2em;
 	margin: 10px;
 	cursor: pointer;
+}
+
+.hostname{
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.2em;
+    margin: 5px 40px;
+    flex: 1 100%;
+    text-align: center;
 }

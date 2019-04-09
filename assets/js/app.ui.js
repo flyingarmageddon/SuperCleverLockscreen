@@ -19,6 +19,9 @@ app.ui = {
 		if (typeof app.weather != "undefined"){
 			app.ui.elements.weather_container = app.utils.createEWC("div", ["weather_container"]);
 		}
+
+		app.ui.elements.hostname.innerHTML = window.lightdm.hostname;
+		app.ui.elements.power_buttons_container.appendChild(app.ui.elements.hostname);
 		
 		Array("shutdown", "restart", "suspend", "hibernate").forEach(key => {
 			if (!lightdm[`can_${key}`]) return; //Action is not allowed - skip adding it
@@ -34,10 +37,8 @@ app.ui = {
 			app.ui.elements.power_buttons_container.appendChild(app.ui.elements["power_buttons_" + key]);
 		})
 
-		// app.ui.elements.login_area.innerHTML = "";
-		app.ui.elements.hostname.innerHTML = window.lightdm.hostname;
+		app.ui.elements.login_area.innerHTML = "";
 
-		// app.ui.elements.login_area.appendChild(app.ui.elements.hostname);
 		app.ui.elements.login_area.appendChild(app.ui.elements.users_container);
 
 		app.ui.clock.init();
