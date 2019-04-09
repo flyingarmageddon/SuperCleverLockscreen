@@ -76,12 +76,12 @@ app.ui = {
 		if (is_good){
 			app.ui.elements.container.classList.add("mega_blur");
 		}else{
-			if (document.querySelector(".user_password").className.indexOf("shaking-red") != -1){
+			if (document.querySelector(".user_item:not(.collapsed) > input").className.indexOf("shaking-red") != -1){
 				return
 			}
-			document.querySelector(".user_password").classList.add("shaking-red");
+			document.querySelector(".user_item:not(.collapsed) > input").classList.add("shaking-red");
 			setTimeout(() => {
-				document.querySelector(".user_password").classList.remove("shaking-red");
+				document.querySelector(".user_item:not(.collapsed) > input").classList.remove("shaking-red");
 			}, 700);
 		}
 	},
