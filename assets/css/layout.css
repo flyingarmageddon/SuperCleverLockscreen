@@ -43,6 +43,13 @@
 	height: 2em;
 	margin: 10px;
 	cursor: pointer;
+    filter: brightness(75%);
+	transition: 0.2s filter ease;
+	-webkit-transition: 0.2s -webkit-filter ease;
+}
+
+.power_button:hover{
+    filter: brightness(100%);
 }
 
 .hostname{
