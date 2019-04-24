@@ -1,0 +1,6 @@
+[theme]
+name=Super Clever Lockscreen
+description=Super Clever Lockscreen
+engine=lightdm-webkit-greeter
+url=index.html
+description=Super Clever Lockscreen
