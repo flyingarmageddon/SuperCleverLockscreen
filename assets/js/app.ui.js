@@ -17,7 +17,7 @@ app.ui = {
 		app.ui.elements.power_buttons_container = app.utils.createEWC("section", ["power_buttons_container"]);
 		app.ui.elements.hostname = app.utils.createEWC("section", ["hostname"]);
 		
-		if (typeof app.weather != "undefined"){
+		if ((app.isEnabled("ui_weather_enable")) && (typeof app.weather != "undefined")){
 			app.ui.elements.weather_container = app.utils.createEWC("div", ["weather_container"]);
 		}
 
@@ -44,13 +44,14 @@ app.ui = {
 
 		app.ui.clock.init();
 
-		if (typeof app.weather != "undefined"){
+		if ((app.isEnabled("ui_weather_enable")) && (typeof app.weather != "undefined")){
 			app.ui.elements.info_bar.appendChild(app.ui.elements.weather_container);
 			app.weather.init();
 		}
 
-		app.ui.elements.info_bar.appendChild(app.ui.elements.power_buttons_container);
-
+		if (app.isEnabled("ui_power_buttons_enable")){
+			app.ui.elements.info_bar.appendChild(app.ui.elements.power_buttons_container);
+		}
 
 		app.ui.users.init();
 	},
@@ -74,7 +75,9 @@ app.ui = {
 			app.ui.elements.users_container.innerHTML = "";
 
 			app.ui.users.renderAll();
-			app.ui.elements.users_container.appendChild(app.ui.users.renderSingle({another_user: true}));
+			if (app.isEnabled("users_other_users")){
+				app.ui.elements.users_container.appendChild(app.ui.users.renderSingle({another_user: true}));
+			}
 			document.querySelector(".user_item:not(.collapsed) input").focus();
 		},
 
@@ -279,7 +282,7 @@ app.ui = {
 				else if (onlyoftype !== false) return false;
 				
 				if (background_list.length == 0){
-					app.ui.background.load("assets/media/default_bg.png");
+					app.ui.background.load("assets/media/default_bg.jpg");
 					return true;
 				}
 				url = background_list[Math.floor(Math.random() * background_list.length)];
