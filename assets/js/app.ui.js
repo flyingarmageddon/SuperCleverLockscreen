@@ -7,7 +7,6 @@ app.ui = {
 	},
 
 	init: function(){
-		//TODO: add focus on password imput
 		//TODO: disable right-click, text selection 
 
 		app.ui.background.updateList();
@@ -121,9 +120,10 @@ app.ui = {
 	
 			user_password = app.utils.createEWC("input", ["user_password"]);
 			user_password.type = "password";
-			user_password.onfocus = () => {app.ui.elements.background.classList.add("blur");}
+			
+			user_password.oninput = () => {app.ui.elements.background.classList.add("blur");}
 			user_password.onblur =  () => {app.ui.elements.background.classList.remove("blur");}
-	
+			
 			user_password.addEventListener("keyup", function(event) {
 				if (event.keyCode === 13) {
 					userData = this.parentElement.userData;
