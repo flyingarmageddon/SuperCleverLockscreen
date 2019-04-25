@@ -20,6 +20,7 @@ app.ui = {
 
 		app.ui.background.updateList();
 		app.ui.background.load();
+		app.ui.background.toggleShortcuts(true);
 
 		app.ui.elements.users_container = app.utils.createEWC("section", ["users_container"]);
 		app.ui.elements.power_buttons_container = app.utils.createEWC("section", ["power_buttons_container"]);
@@ -321,6 +322,26 @@ app.ui = {
 			app.ui.elements.background.innerHTML = "";
 			app.ui.elements.background.appendChild(bgElement);
 			return true;
+		},
+
+		nextBackgroundShortcut: function(event){
+			if ((event.keyCode === 39 || event.keyCode === 37) && event.ctrlKey) {
+				app.ui.background.load();
+				//Animations are bad
+				// app.ui.elements.background.classList.add("mega_blur");
+				// setTimeout(() => {
+				// 	app.ui.background.load();
+				// 	app.ui.elements.background.classList.remove("mega_blur");
+				// }, 500);
+			}
+		},
+
+		toggleShortcuts(toggle = true){
+			if(toggle){
+				document.body.addEventListener("keyup", app.ui.background.nextBackgroundShortcut);
+			} else {
+				document.body.removeEventListener("keyup", app.ui.background.nextBackgroundShortcut);
+			}
 		}
 	}
 };
