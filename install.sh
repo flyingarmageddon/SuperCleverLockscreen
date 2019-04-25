@@ -1,10 +1,8 @@
 #!/bin/bash
 
-THEME_NAME="supercleverlockscreen"
-MODE=0
+source assets/bash/utils.sh
 
-COLOR_RED='\033[1;33m'
-COLOR_NONE='\033[0m'
+MODE=0
 
 if [ $EUID -ne 0 ]; then
     echo "Warning! You have to run this script as root. Trying to run as root..."
