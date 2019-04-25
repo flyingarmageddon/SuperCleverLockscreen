@@ -6,6 +6,14 @@ app.utils = {
 		}
 		return element;
 	},
+
+	createSVG: function(drawing_width, drawing_height, content){
+		svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+		svg.setAttribute("viewBox", `0 0 ${drawing_width} ${drawing_height}`);
+		svg.innerHTML = content;
+		return svg;
+	},
+
 	getCurrentTime: function (){
 		var date = new Date();
 
