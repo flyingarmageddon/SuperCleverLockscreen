@@ -58,7 +58,28 @@ var app = {
 		console.log(`Starting authentication process for: ${username}`);
 		app._password = password;
 		lightdm.authenticate(username);
+	},
+
+	autoPowerButton: {
+		start: function(power_button_key){
+			var timer = document.querySelector('#power_button_timer');
+			app.autoPowerButton.interval = setInterval(() => {
+				app.autoPowerButton.time = parseInt(timer.innerHTML);
+				if (app.autoPowerButton.time > 0){
+					timer.innerHTML = parseInt(timer.innerHTML) - 1;
+				} else {
+					clearInterval(app.autoPowerButton.interval);
+					app.ui.elements["power_buttons_" + power_button_key].action();
+					timer.parentElement.innerHTML = power_button_key + " in progress...";
+				}
+			}, 1000);
+		},
+
+		stop: function(){
+			clearInterval(app.autoPowerButton.interval);
+		}
 	}
+
 };
 
 
