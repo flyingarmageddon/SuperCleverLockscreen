@@ -35,7 +35,6 @@ app.ui = {
 		app.ui.elements.hostname.innerHTML = window.lightdm.hostname;
 		app.ui.elements.power_buttons_container.appendChild(app.ui.elements.hostname);
 		
-		//TODO: Couter
 		Array("shutdown", "restart", "suspend", "hibernate").forEach(key => {
 			if (!lightdm[`can_${key}`]) return; //Action is not allowed - skip adding it
 			app.ui.elements["power_buttons_" + key] = app.utils.createSVG(24, 24, app.ui.icons[key]);
@@ -50,9 +49,20 @@ app.ui = {
 					<h2><span id="power_button_timer">10</span> seconds</h2>
 					<br>
 					<input type="button" value="OK" onclick="app.ui.elements['power_buttons_${key}'].action()"/>
-					<input type="button" value="Cancel" onclick="app.ui.overlay.modal.remove(); app.autoPowerButton.stop();"/>`
+					<input type="button" value="Cancel" onclick="app.ui.overlay.modal.cancel({},true)"/>`
 				);
-				app.autoPowerButton.start(key);
+
+				app.ui.overlay.modal.state.timer.add(() => {
+					var timer = document.querySelector('#power_button_timer');
+					time = parseInt(timer.innerHTML);
+					if (time > 0){
+						timer.innerHTML = parseInt(timer.innerHTML) - 1;
+					} else {
+						app.ui.overlay.modal.state.timer.cancelAll();
+						app.ui.elements["power_buttons_" + key].action();
+						timer.parentElement.innerHTML = key + " in progress...";
+					}
+				}, 1000);
 			}
 			app.ui.elements.power_buttons_container.appendChild(app.ui.elements["power_buttons_" + key]);
 		})
@@ -357,6 +367,27 @@ app.ui = {
 		
 		modal: {
 			mouse_on_modal: false,
+			
+			//TODO: Nicer state (including timers) management
+			state: {
+				timer: {
+					add: function(fn, time){
+						var timer_id = setInterval(fn, time);
+						app.ui.overlay.modal.state.timer.list.push(timer_id);
+						return app.ui.overlay.modal.state.timer.list.indexOf(timer_id);
+					},
+
+					cancelAll: function(){
+						app.ui.overlay.modal.state.timer.list.forEach(timer_id => {
+							clearInterval(timer_id);
+							clearTimeout(timer_id);
+						});
+						app.ui.overlay.modal.state.timer.list = [];
+					},
+
+					list: []
+				}
+			},
 
 			isMouseOnModal: function (bool) {
 				app.ui.overlay.modal.mouse_on_modal = bool;
@@ -382,7 +413,7 @@ app.ui = {
 
 				var close_btn = app.utils.createSVG(24, 24, app.ui.icons.close);
 				close_btn.classList.add("modal_close");
-				close_btn.onclick = app.ui.overlay.modal.remove;
+				close_btn.onclick = () => {app.ui.overlay.modal.cancel({},true)};
 				
 				var content = app.utils.createEWC("div", ["modal_content"]);
 				if(content_html == "demo"){
@@ -400,13 +431,17 @@ app.ui = {
 				app.ui.elements.container.classList.add("blur");
 				app.ui.elements.background.classList.add("blur");
 
-				app.ui.elements.overlay.addEventListener("click", function () {
-					if (!app.ui.overlay.modal.mouse_on_modal) {
-						app.ui.overlay.modal.remove();
-					}
-				});
+				app.ui.elements.overlay.addEventListener("click", app.ui.overlay.modal.cancel);
 				app.ui.elements.modal.addEventListener("mouseover", () => app.ui.overlay.modal.isMouseOnModal(true));
 				app.ui.elements.modal.addEventListener("mouseout", () => app.ui.overlay.modal.isMouseOnModal(false));
+			},
+
+			cancel: function(e = {}, overrideMouseOnModal = false){
+				if (app.ui.overlay.modal.mouse_on_modal && !overrideMouseOnModal) {
+					return;
+				}
+				app.ui.overlay.modal.state.timer.cancelAll();
+				app.ui.overlay.modal.remove();
 			}
 		}
 	}
