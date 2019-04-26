@@ -51,8 +51,23 @@ div.overlay{
 	overflow: auto;
 }
 
-.modal_content > div > h1{
-	color: rgba(0, 0, 0, 0);
+.modal_content > input{
+	cursor: pointer;
+	margin-bottom: 10px;
+	border: none;
+	padding: 10px;
+	border-radius: 2px;
+	background: rgba(0, 0, 0, 0.7);
+	color: rgb(136, 136, 136);
+	transition: 0.2s background ease;
+	-webkit-transition: 0.2s background -webkit-filter ease;
+	transition: 0.2s color ease;
+	-webkit-transition: 0.2s color -webkit-filter ease;
+}
+
+.modal_content > input:hover{
+	background: rgba(0, 0, 0, 0.9);
+	color: white;
 }
 
 .modal_content::-webkit-scrollbar {
