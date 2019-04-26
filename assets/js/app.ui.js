@@ -1,6 +1,7 @@
 app.ui = {
 	elements: {
 		background: document.querySelector(".background"),
+		overlay: document.querySelector(".overlay"),
 		container: document.querySelector(".container"),
 		login_area: document.querySelector(".login_area"),
 		info_bar: document.querySelector(".info_bar")
@@ -12,7 +13,8 @@ app.ui = {
 		restart: '<path d="M0 0h24v24H0z" fill="none"/><path d="M7.11 8.53L5.7 7.11C4.8 8.27 4.24 9.61 4.07 11h2.02c.14-.87.49-1.72 1.02-2.47zM6.09 13H4.07c.17 1.39.72 2.73 1.62 3.89l1.41-1.42c-.52-.75-.87-1.59-1.01-2.47zm1.01 5.32c1.16.9 2.51 1.44 3.9 1.61V17.9c-.87-.15-1.71-.49-2.46-1.03L7.1 18.32zM13 4.07V1L8.45 5.55 13 10V6.09c2.84.48 5 2.94 5 5.91s-2.16 5.43-5 5.91v2.02c3.95-.49 7-3.85 7-7.93s-3.05-7.44-7-7.93z"/>',
 		suspend: '<path d="M10 2c-1.82 0-3.53.5-5 1.35C7.99 5.08 10 8.3 10 12s-2.01 6.92-5 8.65C6.47 21.5 8.18 22 10 22c5.52 0 10-4.48 10-10S15.52 2 10 2z"/><path d="M0 0h24v24H0z" fill="none"/>',
 		hibernate: '<path d="M0 0h24v24H0z" fill="none"/><path d="M11 4.07V2.05c-2.01.2-3.84 1-5.32 2.21L7.1 5.69c1.11-.86 2.44-1.44 3.9-1.62zm7.32.19C16.84 3.05 15.01 2.25 13 2.05v2.02c1.46.18 2.79.76 3.9 1.62l1.42-1.43zM19.93 11h2.02c-.2-2.01-1-3.84-2.21-5.32L18.31 7.1c.86 1.11 1.44 2.44 1.62 3.9zM5.69 7.1L4.26 5.68C3.05 7.16 2.25 8.99 2.05 11h2.02c.18-1.46.76-2.79 1.62-3.9zM4.07 13H2.05c.2 2.01 1 3.84 2.21 5.32l1.43-1.43c-.86-1.1-1.44-2.43-1.62-3.89zM15 12c0-1.66-1.34-3-3-3s-3 1.34-3 3 1.34 3 3 3 3-1.34 3-3zm3.31 4.9l1.43 1.43c1.21-1.48 2.01-3.32 2.21-5.32h-2.02c-.18 1.45-.76 2.78-1.62 3.89zM13 19.93v2.02c2.01-.2 3.84-1 5.32-2.21l-1.43-1.43c-1.1.86-2.43 1.44-3.89 1.62zm-7.32-.19C7.16 20.95 9 21.75 11 21.95v-2.02c-1.46-.18-2.79-.76-3.9-1.62l-1.42 1.43z"/>',
-		settings: '<path fill="none" d="M0 0h20v20H0V0z"/><path d="M15.95 10.78c.03-.25.05-.51.05-.78s-.02-.53-.06-.78l1.69-1.32c.15-.12.19-.34.1-.51l-1.6-2.77c-.1-.18-.31-.24-.49-.18l-1.99.8c-.42-.32-.86-.58-1.35-.78L12 2.34c-.03-.2-.2-.34-.4-.34H8.4c-.2 0-.36.14-.39.34l-.3 2.12c-.49.2-.94.47-1.35.78l-1.99-.8c-.18-.07-.39 0-.49.18l-1.6 2.77c-.1.18-.06.39.1.51l1.69 1.32c-.04.25-.07.52-.07.78s.02.53.06.78L2.37 12.1c-.15.12-.19.34-.1.51l1.6 2.77c.1.18.31.24.49.18l1.99-.8c.42.32.86.58 1.35.78l.3 2.12c.04.2.2.34.4.34h3.2c.2 0 .37-.14.39-.34l.3-2.12c.49-.2.94-.47 1.35-.78l1.99.8c.18.07.39 0 .49-.18l1.6-2.77c.1-.18.06-.39-.1-.51l-1.67-1.32zM10 13c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3z"/>'
+		settings: '<path fill="none" d="M0 0h20v20H0V0z"/><path d="M15.95 10.78c.03-.25.05-.51.05-.78s-.02-.53-.06-.78l1.69-1.32c.15-.12.19-.34.1-.51l-1.6-2.77c-.1-.18-.31-.24-.49-.18l-1.99.8c-.42-.32-.86-.58-1.35-.78L12 2.34c-.03-.2-.2-.34-.4-.34H8.4c-.2 0-.36.14-.39.34l-.3 2.12c-.49.2-.94.47-1.35.78l-1.99-.8c-.18-.07-.39 0-.49.18l-1.6 2.77c-.1.18-.06.39.1.51l1.69 1.32c-.04.25-.07.52-.07.78s.02.53.06.78L2.37 12.1c-.15.12-.19.34-.1.51l1.6 2.77c.1.18.31.24.49.18l1.99-.8c.42.32.86.58 1.35.78l.3 2.12c.04.2.2.34.4.34h3.2c.2 0 .37-.14.39-.34l.3-2.12c.49-.2.94-.47 1.35-.78l1.99.8c.18.07.39 0 .49-.18l1.6-2.77c.1-.18.06-.39-.1-.51l-1.67-1.32zM10 13c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3z"/>',
+		close: '<path fill="none" d="M0 0h24v24H0V0z"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>'
 	},
 
 	init: function(){
@@ -50,9 +52,7 @@ app.ui = {
 		//TODO: Not sure about place, maybe it should be moved to right-top or somewhere
 		app.ui.elements["power_button_settings"] = app.utils.createSVG(24, 24, app.ui.icons["settings"]);
 		app.ui.elements["power_button_settings"].classList.add("power_button");
-		app.ui.elements["power_button_settings"].onclick = function () {
-			alert("Demo Button");
-		}
+		app.ui.elements["power_button_settings"].onclick = () => app.ui.overlay.modal.create();
 		app.ui.elements.power_buttons_container.appendChild(app.ui.elements["power_button_settings"]);
 
 		app.ui.elements.login_area.innerHTML = "";
@@ -341,6 +341,64 @@ app.ui = {
 				document.body.addEventListener("keyup", app.ui.background.nextBackgroundShortcut);
 			} else {
 				document.body.removeEventListener("keyup", app.ui.background.nextBackgroundShortcut);
+			}
+		}
+	},
+
+	overlay: {
+		
+		modal: {
+			mouse_on_modal: false,
+
+			isMouseOnModal: function (bool) {
+				app.ui.overlay.modal.mouse_on_modal = bool;
+			},
+
+			remove: function(){
+				app.ui.elements.overlay.style.display = "none";
+				app.ui.elements.overlay.innerHTML = "";
+
+				app.ui.elements.container.classList.remove("blur");
+				app.ui.elements.background.classList.remove("blur");
+			},
+
+			create: function (title_text = "Demo Title", content_html = "demo") {
+				app.ui.elements.overlay.style.display = "flex";
+
+				app.ui.elements.modal = app.utils.createEWC("div", ["modal"]);
+				app.ui.elements.overlay.appendChild(app.ui.elements.modal);
+				
+				var title = app.utils.createEWC("div", ["modal_title"]);
+				title_text = `<h1>${title_text}</h1>`;
+				title.innerHTML = title_text;
+
+				var close_btn = app.utils.createSVG(24, 24, app.ui.icons.close);
+				close_btn.classList.add("modal_close");
+				close_btn.onclick = app.ui.overlay.modal.remove;
+				
+				var content = app.utils.createEWC("div", ["modal_content"]);
+				if(content_html == "demo"){
+					content_html = "<h2>Section</h2><p>Have a nice day.</p>";
+					for(var i = 0; i < 3; i++){
+						content_html += content_html;
+					}
+				}
+				content.innerHTML = content_html;
+
+				app.ui.elements.modal.appendChild(title);
+				app.ui.elements.modal.appendChild(close_btn);
+				app.ui.elements.modal.appendChild(content);
+
+				app.ui.elements.container.classList.add("blur");
+				app.ui.elements.background.classList.add("blur");
+
+				app.ui.elements.overlay.addEventListener("click", function () {
+					if (!app.ui.overlay.modal.mouse_on_modal) {
+						app.ui.overlay.modal.remove();
+					}
+				});
+				app.ui.elements.modal.addEventListener("mouseover", () => app.ui.overlay.modal.isMouseOnModal(true));
+				app.ui.elements.modal.addEventListener("mouseout", () => app.ui.overlay.modal.isMouseOnModal(false));
 			}
 		}
 	}
