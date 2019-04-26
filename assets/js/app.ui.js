@@ -35,7 +35,6 @@ app.ui = {
 		app.ui.elements.hostname.innerHTML = window.lightdm.hostname;
 		app.ui.elements.power_buttons_container.appendChild(app.ui.elements.hostname);
 		
-		//Fix: Action after click on button (not after confirmation)
 		//TODO: Couter
 		Array("shutdown", "restart", "suspend", "hibernate").forEach(key => {
 			if (!lightdm[`can_${key}`]) return; //Action is not allowed - skip adding it
@@ -50,7 +49,7 @@ app.ui = {
 					<p>It will be automaticly done in..</p>
 					<h2><span id="power_button_timer">10</span> seconds</h2>
 					<br>
-					<input type="button" value="OK" onclick="${app.ui.elements["power_buttons_" + key].action()}"/>
+					<input type="button" value="OK" onclick="app.ui.elements['power_buttons_${key}'].action()"/>
 					<input type="button" value="Cancel" onclick="app.ui.overlay.modal.remove()"/>`
 				);
 			}
