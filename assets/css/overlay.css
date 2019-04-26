@@ -22,7 +22,7 @@ div.overlay{
 	background: rgba(0, 0, 0, 0.82);
 	border-radius: 5px;
 	display: flex;
-	text-align: center;
+	/* text-align: center; */
 	color: white;
 }
 
@@ -49,6 +49,8 @@ div.overlay{
 	margin-top: 81px;
 	flex: 1 0 100%;
 	overflow: auto;
+    padding: 0px 10px;
+    box-sizing: border-box;
 }
 
 .modal_content > input{
@@ -84,4 +86,35 @@ div.overlay{
 
 .modal_content::-webkit-scrollbar-thumb:hover {
   background: rgb(199, 199, 199); 
+}
+
+section > h2{
+	margin: 0;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #909090;
+}
+
+
+.row {
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+}
+
+.row > .row_setting {
+    margin-left: auto;
+}
+
+.row > .row_setting > input[type="text"]{
+    background-color: #28552f;
+    font-weight: 400;
+    border-color: transparent;
+	border-radius: 5px;
+	outline: none !important;
+    color: #fff;
+    padding: 8px;
+	margin-right: 10px;
+	min-width: 230px;
 }

@@ -89,6 +89,7 @@ app.ui = {
 		}
 
 		app.ui.users.init();
+		try {customselect.init();} catch (e) {}
 	},
 
 	passwordFeedback: function(is_good = false){
@@ -157,8 +158,8 @@ app.ui = {
 			user_password = app.utils.createEWC("input", ["user_password"]);
 			user_password.type = "password";
 			
-			user_password.oninput = () => {app.ui.elements.background.classList.add("blur");}
-			user_password.onblur =  () => {app.ui.elements.background.classList.remove("blur");}
+			user_password.oninput = () => { if (!app.ui.overlay.modal.mouse_on_modal) app.ui.elements.background.classList.add("blur");}
+			user_password.onblur =  () => { if (!app.ui.overlay.modal.mouse_on_modal) app.ui.elements.background.classList.remove("blur");}
 			
 			user_password.addEventListener("keyup", function(event) {
 				if (event.keyCode === 13) {

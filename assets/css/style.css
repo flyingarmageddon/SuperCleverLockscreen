@@ -6,6 +6,8 @@
 @import "layout.css";
 @import "weather.css";
 @import "effects.css";
+@import "radio.css";
+@import "customselect.css";
 
 html, body{
 	width: 100%;
