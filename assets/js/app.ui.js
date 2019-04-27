@@ -257,10 +257,10 @@ app.ui = {
 		},
 
 		update: function(){
-			time = app.utils.getCurrentTime();
+			time = app.utils.getTime();
 			app.ui.clock.element.innerHTML = `
 				<h1>${time.hour}:${time.minute}</h1>
-				<h2>${time.day} ${time.month} ${time.year}</h2>
+				<h2>${time.day} ${time.month_name} ${time.year}</h2>
 			`;
 		}
 	},
