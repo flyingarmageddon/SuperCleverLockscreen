@@ -60,7 +60,9 @@ app.settings = {
 					options = `<option>${item.desc}</option>`;
 
 					item.data_src.forEach(src => {
-						options += `<option value="${src.value}">${src.desc}</option>`
+						let selected = "";
+						if (src.value == value) selected = "selected";
+						options += `<option value="${src.value}" ${selected} >${src.desc}</option>`
 					})
 
 					row_setting.innerHTML = `<div class="custom-select"><select>${options}</select></div>`;
