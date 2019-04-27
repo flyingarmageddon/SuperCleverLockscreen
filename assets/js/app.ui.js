@@ -270,17 +270,8 @@ app.ui = {
 	background: {
 		list: [],
 		extensions: {
-			image:
-				[
-					"jpg",
-					"jpeg",
-					"png",
-					"gif"
-				],
-			video:
-				[
-					"mp4"
-				]
+			image: ["jpg", "jpeg", "png", "gif"],
+			video: ["mp4"]
 		},
 
 		isValidImage: function (file) {
