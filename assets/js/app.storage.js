@@ -62,4 +62,19 @@ app.storage = {
 
 	getItem: (key) => {return app.storage.get(key)},
 	setItem: (key, value) => {return app.storage.set(key, value)},
+
+	export: function(){
+		console.log("--------------------");
+		console.log(JSON.stringify(app.storage.data));
+		console.log("--------------------");
+	},
+
+	import: function(){
+		input = prompt("Import data:");
+		if (input.length > 2){
+			localStorage.setItem(app.storage.store_name, input);
+		}else{
+			alert("Input too short.");
+		}
+	}
 };
