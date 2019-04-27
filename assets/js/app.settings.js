@@ -13,18 +13,19 @@ app.settings = {
 			{
 				name: "Użytkownicy i logowanie",
 				items: [
-					{desc: 'Pokazuj pole "inny użytkownik"', 	type: "checkbox", 	data_bind: "show_other_user"},
-					{desc: 'Pokazuj pogodę', 					type: "checkbox", 	data_bind: "show_weather"},
-					{desc: 'Pokazuj wiadomości',				type: "checkbox", 	data_bind: "show_news"},
-					{desc: 'Język aplikacji', 					type: "select", 	data_bind: "app_language", 		data_src: app.all_languages},
+					{desc: 'Pokazuj pole "inny użytkownik"', 	type: "checkbox", 	data_bind: "ui.show_other_user"},
+					{desc: 'Pokazuj pogodę', 					type: "checkbox", 	data_bind: "ui.show_weather"},
+					{desc: 'Pokazuj wiadomości',				type: "checkbox", 	data_bind: "ui.show_news"},
+					{desc: 'Język aplikacji', 					type: "select", 	data_bind: "app.language", 		data_src: app.all_languages},
 				]
 			},
 			{
 				name: "Wygląd",
 				items: [
-					{desc: 'Tło', 								type: "select", 	data_bind: "show_other_user", 	data_src: app.all_languages},
-					{desc: 'Pokazuj wiadomości', 				type: "checkbox", 	data_bind: "show_other_user"},
-					{desc: 'Lokalizacja', 						type: "text", 		data_bind: "show_other_user"},
+					{desc: 'Tło', 								type: "select", 	data_bind: "ui.show_other_user", 	data_src: app.all_languages},
+					{desc: 'Pokazuj wiadomości', 				type: "checkbox", 	data_bind: "ui.show_other_user"},
+					{desc: 'Lokalizacja', 						type: "text", 		data_bind: "weather.location"},
+					{desc: 'Klucz API OWM',						type: "text", 		data_bind: "weather.api_key"},
 				]
 			}
 		];
@@ -38,11 +39,11 @@ app.settings = {
 			section.items.forEach(item => {
 				let row_setting = app.utils.createEWC("div", ["row_setting"]);
 
-				value = app.storage.getItem(item.data_bind);
+				value = app.storage.get(item.data_bind);
 				
 				if (item.type == "text") {
 					if (value) {
-						row_setting.innerHTML = `<input type="text" value=${value}>`;
+						row_setting.innerHTML = `<input type="text" value="${value}">`;
 					} else {
 						row_setting.innerHTML = `<input type="text">`;
 					}

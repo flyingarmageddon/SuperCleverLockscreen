@@ -11,19 +11,11 @@ app.weather = {
 	],
 
 	init: function(){
-		app.settings.data.weather.api_key = app.storage.getItem("weather_api_key");
-		if (app.settings.data.weather.api_key != null){
-			app.settings.data.weather.country = app.storage.getItem("weather_country");
-			app.settings.data.weather.city = app.storage.getItem("weather_city");
-			app.settings.data.weather.units = app.storage.getItem("weather_units");
-		} else {
-			//demo
-			app.settings.data.weather.api_key = "";
-			app.settings.data.weather.country = "Poland";
-			app.settings.data.weather.city = "Warszawa";
-			app.settings.data.weather.units = "metric";
+		if (!app.storage.get("weather.api_key")){
+			console.warn("Warning! Open Weather API Key not provided! Weather could not be enabled.");
+			return false;
 		}
-		
+
 		app.weather.updateForecast();
 		app.weather.renderForecast();	
 	}, 
@@ -67,11 +59,11 @@ app.weather = {
 			return;
 		}
 		var url = `http://api.openweathermap.org/data/2.5/forecast/daily?`
-		url += `q=${app.settings.data.weather.city},${app.settings.data.weather.country}`
+		url += `q=${app.storage.get("weather.location")}`
 		url +=	`&mode=json`
-		url +=	`&units=${app.settings.data.weather.units}`
+		url +=	`&units=${app.storage.get("weather.units")}`
 		url +=	`&cnt=5`
-		url +=	`&apikey=${app.settings.data.weather.api_key}`;
+		url +=	`&apikey=${app.storage.get("weather.api_key")}`;
 
 		var request = new XMLHttpRequest();
 		request.open('GET', url, true);

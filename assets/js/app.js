@@ -15,8 +15,6 @@ var app = {
 		}
 	},
 
-	storage: localStorage,
-
 	isEnabled: function(feature_name){
 		var featureSet = this._features.master;
 		if (typeof featureSet[feature_name] == "undefined"){
@@ -28,6 +26,8 @@ var app = {
 	},
 
 	init: function(){		
+		app.storage.load();
+		
 		if (typeof window.lightdm == "undefined"){
 			window.lightdm = app.debug.fakeLightDM;
 			window.theme_utils  = app.debug.fakeThemeUtils;
