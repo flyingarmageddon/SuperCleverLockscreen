@@ -63,7 +63,7 @@ app.weather = {
 
 	getForecast: function(){
 		if (app.settings.data.weather.api_key == ""){
-			alert("Warning! Open Weather API Key not provided! Weather cound not be enabled.");
+			alert("Warning! Open Weather API Key not provided! Weather could not be enabled.");
 			return;
 		}
 		var url = `http://api.openweathermap.org/data/2.5/forecast/daily?`

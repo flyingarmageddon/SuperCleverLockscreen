@@ -40,16 +40,17 @@ app.ui = {
 			app.ui.elements["power_buttons_" + key] = app.utils.createSVG(24, 24, app.ui.icons[key]);
 			app.ui.elements["power_buttons_" + key].classList.add("power_button");
 			app.ui.elements["power_buttons_" + key].action = lightdm[key];
-			app.ui.elements["power_buttons_" + key].desc = key;
+			app.ui.elements["power_buttons_" + key].key = key;
+			app.ui.elements["power_buttons_" + key].desc = app.strings.power[key];
 			app.ui.elements["power_buttons_" + key].onclick = () => {
 				app.ui.overlay.modal.create(
-					app.ui.elements["power_buttons_" + key].desc,
-					`<h2>Are you sure, you want to ${app.ui.elements["power_buttons_" + key].desc} your PC?</h2>
+					app.strings.power[key].u() + "?",
+					`<h2>${app.strings.phrases.are_you_sure.u() + " " + app.strings.power["to_" + key] + " " + app.strings.your + " " + app.strings.computer}?</h2>
 					<p>It will be automaticly done in..</p>
 					<h2><span id="power_button_timer">10</span> seconds</h2>
 					<br>
-					<input type="button" value="OK" onclick="app.ui.elements['power_buttons_${key}'].action()"/>
-					<input type="button" value="Cancel" onclick="app.ui.overlay.modal.cancel({},true)"/>`,
+					<input type="button" value="${app.strings.ok}" onclick="app.ui.elements['power_buttons_${key}'].action()"/>
+					<input type="button" value="${app.strings.cancel.u()}" onclick="app.ui.overlay.modal.cancel({},true)"/>`,
 					["text_center"]
 				);
 
@@ -130,9 +131,9 @@ app.ui = {
 	
 			if (userData.another_user){
 				user_nice_name = app.utils.createEWC("div", ["user_nice_name"]);
-				user_nice_name.innerHTML = "Another user"
+				user_nice_name.innerHTML = app.strings.another.u() + " " + app.strings.user;
 				user_name = app.utils.createEWC("input", ["user_name"]);
-				user_name.placeholder = "Username";
+				user_name.placeholder = app.strings.username;
 				user.userData.user_element = user_name;
 			}else{
 				user.userData = userData;
@@ -152,7 +153,7 @@ app.ui = {
 				}
 		
 				if (userData.logged_in){
-					user_info.innerHTML = "Zalogowany";
+					user_info.innerHTML = app.strings.logged_in.u();
 				}	
 			}
 	
@@ -178,7 +179,7 @@ app.ui = {
 			user.appendChild(user_nice_name);
 
 			if (userData.another_user){
-				user_password.placeholder = "Password";
+				user_password.placeholder = app.strings.password.u();
 				user.appendChild(user_name);
 			}
 

@@ -27,7 +27,7 @@ var app = {
 		}
 	},
 
-	init: function(){
+	init: function(){		
 		if (typeof window.lightdm == "undefined"){
 			window.lightdm = app.debug.fakeLightDM;
 			window.theme_utils  = app.debug.fakeThemeUtils;
