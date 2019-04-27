@@ -2,7 +2,7 @@ var app = {
 	_features: {
 		master: {
 			ui_news_enable: 			false,
-			ui_weather_enable: 			false,
+			ui_weather_enable: 			true,
 			ui_power_buttons_enable: 	true,
 			users_other_users: 			true
 		},
@@ -14,6 +14,8 @@ var app = {
 			users_other_users: 			true
 		}
 	},
+
+	storage: localStorage,
 
 	isEnabled: function(feature_name){
 		var featureSet = this._features.master;
