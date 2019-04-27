@@ -20,6 +20,11 @@ app.ui = {
 	init: function(){
 		//TODO: disable right-click, text selection 
 
+		app.ui.elements.background.innerHTML = "";
+		app.ui.elements.overlay.innerHTML = "";
+		app.ui.elements.login_area.innerHTML = "";
+		app.ui.elements.info_bar.innerHTML = "";
+
 		app.ui.background.updateList();
 		app.ui.background.load();
 		app.ui.background.toggleShortcuts(true);
@@ -133,7 +138,7 @@ app.ui = {
 				user_nice_name = app.utils.createEWC("div", ["user_nice_name"]);
 				user_nice_name.innerHTML = app.strings.another.u() + " " + app.strings.user;
 				user_name = app.utils.createEWC("input", ["user_name"]);
-				user_name.placeholder = app.strings.username;
+				user_name.placeholder = app.strings.username.u();
 				user.userData.user_element = user_name;
 			}else{
 				user.userData = userData;
