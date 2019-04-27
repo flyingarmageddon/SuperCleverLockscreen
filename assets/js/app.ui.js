@@ -77,7 +77,7 @@ app.ui = {
 		//TODO: Not sure about place, maybe it should be moved to right-top or somewhere
 		app.ui.elements["power_button_settings"] = app.utils.createSVG(24, 24, app.ui.icons["settings"]);
 		app.ui.elements["power_button_settings"].classList.add("power_button");
-		app.ui.elements["power_button_settings"].onclick = () => app.ui.overlay.modal.create();
+		app.ui.elements["power_button_settings"].onclick = app.settings.createModal;
 		app.ui.elements.power_buttons_container.appendChild(app.ui.elements["power_button_settings"]);
 
 		app.ui.elements.login_area.innerHTML = "";

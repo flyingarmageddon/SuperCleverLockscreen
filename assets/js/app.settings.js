@@ -4,81 +4,81 @@ app.settings = {
 	},
 	
 	createModal: function(){
+		app.all_languages = [
+			{"desc": "Angielski", "value": "en"},
+			{"desc": "Polski", "value": "pl"}
+		];
 
-		// TODO: Create that based on config.
-		prefs_html = `
-			<section>
-				<h2>Użytkownicy i logowanie</h2>
+		let sections = [
+			{
+				name: "Użytkownicy i logowanie",
+				items: [
+					{desc: 'Pokazuj pole "inny użytkownik"', 	type: "checkbox", 	data_bind: "show_other_user"},
+					{desc: 'Pokazuj pogodę', 					type: "checkbox", 	data_bind: "show_weather"},
+					{desc: 'Pokazuj wiadomości',				type: "checkbox", 	data_bind: "show_news"},
+					{desc: 'Język aplikacji', 					type: "select", 	data_bind: "app_language", 		data_src: app.all_languages},
+				]
+			},
+			{
+				name: "Wygląd",
+				items: [
+					{desc: 'Tło', 								type: "select", 	data_bind: "show_other_user", 	data_src: app.all_languages},
+					{desc: 'Pokazuj wiadomości', 				type: "checkbox", 	data_bind: "show_other_user"},
+					{desc: 'Lokalizacja', 						type: "text", 		data_bind: "show_other_user"},
+				]
+			}
+		];
+
+		let prefs_html = document.createElement("div");
+
+		sections.forEach(section => {
+			let sectionContainer = document.createElement("section");
+			sectionContainer.innerHTML += `<h2>${section.name}</h2>`;
+
+			section.items.forEach(item => {
+				let row_setting = app.utils.createEWC("div", ["row_setting"]);
+
+				value = app.storage.getItem(item.data_bind);
 				
-				<label class="row">
-					Pokazuj pole "inny użytkownik"
-					
-					<div class="row_setting lcontainer">
-						<input type="checkbox" checked="checked">
-						<span class="checkmark"></span>
-					</div>
-				</label>
-
-
-				<h2>Wygląd</h2>
+				if (item.type == "text") {
+					if (value) {
+						row_setting.innerHTML = `<input type="text" value=${value}>`;
+					} else {
+						row_setting.innerHTML = `<input type="text">`;
+					}
 				
-				<label class="row">
-					Tło
-					
-					<div class="row_setting">
-						<div class="custom-select"><select>
-							<option>Tło</option>
-							<option>Ładne tło 1 (test.jpg)</option>
-							<option>Ładne tło 2 (Pozdrawiam Mateusza)</option>
-						</select></div>
-					</div>
-				</label>
+				} else if (item.type == "checkbox") {
+					row_setting.classList.add("lcontainer");
+					if (value) {
+						row_setting.innerHTML = `<input type="checkbox" checked="checked"><span class="checkmark"></span>`;
+					}else {
+						row_setting.innerHTML = `<input type="checkbox"><span class="checkmark"></span>`;
+					}
 				
-				<label class="row">
-					Pokazuj pogodę
-					
-					<div class="row_setting lcontainer">
-						<input type="checkbox" checked="checked">
-						<span class="checkmark"></span>
-					</div>
-				</label>
+				} else if (item.type == "select") {
+					options = `<option>${item.desc}</option>`;
+
+					item.data_src.forEach(src => {
+						options += `<option value="${src.value}">${src.desc}</option>`
+					})
+
+					row_setting.innerHTML = `<div class="custom-select"><select>${options}</select></div>`;
 				
-				<label class="row">
-					Lokalizacja
-					
-					<div class="row_setting">
-						<input type="text">
-					</div>
-				</label>
-				
-				<label class="row">
-					Pokazuj wiadomości
-					
-					<div class="row_setting lcontainer">
-						<input type="checkbox" checked="checked">
-						<span class="checkmark"></span>
-					</div>
-				</label>
+				} else {
+					row_setting.innerHTML = "WTF?";
+				}
 
+				let label = app.utils.createEWC("label", ["row"]);
+				label.innerHTML = item.desc;
+				label.appendChild(row_setting);
+				sectionContainer.appendChild(label);
+				label.internalData = item;
+			})
 
-				<h2>Regionalne</h2>
-				
-				<label class="row">
-					Język aplikacji
-					
-					<div class="row_setting">
-						<div class="custom-select"><select>
-							<option>Język aplikacji</option>
-							<option>Polski</option>
-							<option>Angielski</option>
-						</select></div>
-					</div>
-				</label>
-			</section>
-		`;
+			prefs_html.appendChild(sectionContainer);
+		})
 
-
-		app.ui.overlay.modal.create("Ustawienia", prefs_html);
+		app.ui.overlay.modal.create("Ustawienia", prefs_html.innerHTML);
 		customselect.refresh();
 	}
 };
