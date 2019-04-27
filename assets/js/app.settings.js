@@ -1,5 +1,10 @@
 app.settings = {
+	data: {
+		weather: {}
+	},
+	
 	createModal: function(){
+
 		// TODO: Create that based on config.
 		prefs_html = `
 			<section>
