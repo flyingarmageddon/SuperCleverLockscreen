@@ -37,13 +37,13 @@ app.utils = {
 		}
 
 		week_day_name = {
-			0: "sunday",
-			1: "monday",
-			2: "tuesday",
-			3: "wednesday",
-			4: "thursday",
-			5: "friday",
-			6: "saturday",
+			0: app.strings.days.sunday.u(),
+			1: app.strings.days.monday.u(),
+			2: app.strings.days.tuesday.u(),
+			3: app.strings.days.wednesday.u(),
+			4: app.strings.days.thursday.u(),
+			5: app.strings.days.friday.u(),
+			6: app.strings.days.saturday.u()
 		}
 
 		return {
@@ -68,11 +68,11 @@ app.utils = {
 		if(year_diff == 0 && month_diff == 0){
 			switch (day_diff) {
 				case -1:
-					return "yesterday"
+					return app.strings.days.yesterday.u();
 				case 0:
-					return "today"
+					return app.strings.days.today.u();
 				case 1:
-					return "tomorrow"
+					return app.strings.days.tomorrow.u();
 				default:
 					if(day_diff <= 7){
 						day = app.utils.getTime(timestamp);
