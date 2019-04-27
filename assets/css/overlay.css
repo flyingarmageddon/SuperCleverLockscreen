@@ -118,3 +118,7 @@ section > h2{
 	margin-right: 10px;
 	min-width: 230px;
 }
+
+.text_center {
+	text-align: center;
+}

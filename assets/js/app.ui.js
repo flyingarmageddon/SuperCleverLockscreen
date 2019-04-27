@@ -49,7 +49,8 @@ app.ui = {
 					<h2><span id="power_button_timer">10</span> seconds</h2>
 					<br>
 					<input type="button" value="OK" onclick="app.ui.elements['power_buttons_${key}'].action()"/>
-					<input type="button" value="Cancel" onclick="app.ui.overlay.modal.cancel({},true)"/>`
+					<input type="button" value="Cancel" onclick="app.ui.overlay.modal.cancel({},true)"/>`,
+					["text_center"]
 				);
 
 				app.ui.overlay.modal.state.timer.add(() => {
@@ -402,13 +403,15 @@ app.ui = {
 				app.ui.elements.background.classList.remove("blur");
 			},
 
-			create: function (title_text = "Demo Title", content_html = "demo") {
+			create: function (title_text = "Demo Title", content_html = "demo", addional_classes = []) {
 				app.ui.elements.overlay.style.display = "flex";
 
-				app.ui.elements.modal = app.utils.createEWC("div", ["modal"]);
+				addional_classes.push("modal");
+				app.ui.elements.modal = app.utils.createEWC("div", addional_classes);
 				app.ui.elements.overlay.appendChild(app.ui.elements.modal);
 				
 				var title = app.utils.createEWC("div", ["modal_title"]);
+				title.classList.add("text_center");
 				title_text = `<h1>${title_text}</h1>`;
 				title.innerHTML = title_text;
 
