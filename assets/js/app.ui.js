@@ -404,7 +404,7 @@ app.ui = {
 			create: function (options) {
 				app.ui.elements.overlay.style.display = "flex";
 
-				if (!options || !options.title || !options.content) {
+				if (!options || !options.title || (!options.content && !options.content_element)) {
 					console.warn("Attempt to create empty modal.");
 					return;
 				}
@@ -444,8 +444,11 @@ app.ui = {
 
 
 				// Prepare Content
-				modal_content.innerHTML = options.content;
-
+				if (options.content_element) {
+					modal_content.appendChild(options.content_element)
+				} else {
+					modal_content.innerHTML = options.content;
+				}
 
 				// Prepare Footer
 				options.buttons.forEach(b => {

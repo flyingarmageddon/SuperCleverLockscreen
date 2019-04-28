@@ -27,6 +27,8 @@ var app = {
 
 	init: function(){		
 		app.storage.load();
+
+		app.i18n.setLanguage(app.storage.get("app.language", "en"));
 		
 		if (typeof window.lightdm == "undefined"){
 			window.lightdm = app.debug.fakeLightDM;

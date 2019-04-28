@@ -19,6 +19,30 @@ app.i18n = {
 			are_you_sure:	"czy na pewno chcesz"
 		},
 
+		settings: {
+			settings: 		"ustawienia",
+			show: 			"pokaż",
+			field: 			"pole",
+			weather: 		"pogoda",
+			weather2: 		"pogodę",
+			background: 	"tło",
+			look: 			"wygląd",
+			news: 			"wiadomości",
+			location: 		"lokalizacja",
+			language: 		"język",
+			app: 			"aplikacja",
+			app2: 			"aplikacji",
+			app_language: 	"język aplikacji",
+			api_key: 		"klucz API",
+			owm: 			"OWM",
+			users_and_logon:"użytkownicy i logowanie",
+		},
+
+		languages: {
+			en: 			"Angielski",
+			pl: 			"Polski",
+		},
+
 		power: {
 			shutdown: 		"wyłącz",
 			restart: 		"zrestartuj",
@@ -64,6 +88,30 @@ app.i18n = {
 			are_you_sure:	"are you sure you want"
 		},
 
+		settings: {
+			settings: 		"settings",
+			show: 			"show",
+			field: 			"field",
+			weather: 		"weather",
+			weather2: 		"weather",
+			background: 	"background",
+			look: 			"look",
+			news: 			"news",
+			location: 		"location",
+			language: 		"language",
+			app: 			"app",
+			app2: 			"app",
+			app_language: 	"app language",
+			api_key: 		"API key",
+			owm: 			"OWM",
+			users_and_logon:"users and logon",
+		},
+
+		languages: {
+			en: 			"english",
+			pl: 			"polish",
+		},
+
 		power: {
 			shutdown: 		"shutdown",
 			restart: 		"restart",
@@ -95,6 +143,17 @@ app.i18n = {
 		}
 
 		app.strings = this[lang];
+	},
+
+	stringBuilder: function(list){
+		output = "";
+
+		list.forEach((item, i) => {
+			output += eval("app.strings." + item);
+			if (i != list.length - 1) output += " ";
+		});
+
+		return output.u();
 	}
 };
 
