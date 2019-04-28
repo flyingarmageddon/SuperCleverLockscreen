@@ -81,7 +81,11 @@ app.settings = {
 			prefs_html.appendChild(sectionContainer);
 		})
 
-		app.ui.overlay.modal.create("Ustawienia", prefs_html.innerHTML);
+		app.ui.overlay.modal.create({
+			title: "Ustawienia",
+			content: prefs_html.innerHTML,
+			closeAction: function(){console.error("TODO: save settings")}
+		});
 		customselect.refresh();
 	}
 };

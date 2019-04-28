@@ -79,11 +79,11 @@
 .custom-select {
     box-shadow: none;
     border-radius: 0;
-    width: 250px;
+    width: 180px;
 }
 
 .select-selected {
-    background-color: #249c37;
+    background-color: #28552f;
     font-size: 0.9em;
     font-weight: 400;
     border-color: transparent;
@@ -97,7 +97,7 @@
 
 .select-items div, .select-selected {
     display: flex;
-    padding: 8px;
+    padding: 4px;
     border: 1px solid transparent;
     border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
 }

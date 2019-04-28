@@ -22,8 +22,9 @@ div.overlay{
 	background: rgba(0, 0, 0, 0.82);
 	border-radius: 5px;
 	display: flex;
-	/* text-align: center; */
 	color: white;
+	flex-direction: column;
+    overflow: hidden;
 }
 
 .modal_title > h1{
@@ -36,19 +37,18 @@ div.overlay{
 	background: rgba(0, 0, 0, 0.9);
 	border-radius: 5px 5px 0 0;
 }
+
 .modal_close{
-	position: absolute;
-	top: 5px;
-	right: 5px;
+    margin: 5px;
 	fill: white;
 	height: 2em;
 	cursor: pointer;
 }
 
 .modal_content{
-	margin-top: 81px;
 	flex: 1 0 100%;
-	overflow: auto;
+    overflow: auto;
+    margin: 10px 0px;
     padding: 0px 10px;
     box-sizing: border-box;
 }
@@ -89,18 +89,23 @@ div.overlay{
 }
 
 section > h2{
-	margin: 0;
+    margin: 0;
     margin-top: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 0;
     padding-bottom: 4px;
-    border-bottom: 1px solid #909090;
+	border-bottom: 1px solid #ffffff2e;
+	
+    text-align: left;
+    font-size: 1.2em;
+    font-weight: 100;
 }
 
 
 .row {
     display: flex;
     align-items: center;
-    min-height: 40px;
+    min-height: 32px;
+    color: #ddd;
 }
 
 .row > .row_setting {
@@ -114,11 +119,55 @@ section > h2{
 	border-radius: 5px;
 	outline: none !important;
     color: #fff;
-    padding: 8px;
+    padding: 4px;
 	margin-right: 10px;
-	min-width: 230px;
+    width: 167px;
 }
 
 .text_center {
 	text-align: center;
+}
+
+.modal_header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ffffff4a;
+	min-height: 40px;
+}
+
+.modal_header_title{
+    margin: 10px;
+    font-weight: 100;
+}
+
+
+.modal_footer{
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #ffffff4a;
+	min-height: 40px;
+}
+
+.modal_footer_button{
+	outline: none !important;
+	margin: 5px;
+    font-size: 1.5em;
+    color: #eee;
+    background: none;
+	border: none;
+	transition: 0.2s all ease;
+}
+
+.modal_footer:hover > .modal_footer_button:not(:hover){
+	color: #bbb;
+}
+
+.modal_footer_button:hover{   
+	transform: translateY(-1px);
+    text-shadow: 0px 0px 10px #ffffff70;
+}
+
+.modal_content > section:not(:last-of-type){
+	margin-bottom: 20px;
 }

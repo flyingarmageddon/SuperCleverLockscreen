@@ -48,16 +48,17 @@ app.ui = {
 			app.ui.elements["power_buttons_" + key].key = key;
 			app.ui.elements["power_buttons_" + key].desc = app.strings.power[key];
 			app.ui.elements["power_buttons_" + key].onclick = () => {
-				app.ui.overlay.modal.create(
-					app.strings.power[key].u() + "?",
-					`<h2>${app.strings.phrases.are_you_sure.u() + " " + app.strings.power["to_" + key] + " " + app.strings.your + " " + app.strings.computer}?</h2>
+				app.ui.overlay.modal.create({
+					title: app.strings.power[key].u() + "?",
+					content: `
+					<h2>${app.strings.phrases.are_you_sure.u() + " " + app.strings.power["to_" + key] + " " + app.strings.your + " " + app.strings.computer}?</h2>
 					<p>It will be automaticly done in..</p>
-					<h2><span id="power_button_timer">10</span> seconds</h2>
-					<br>
-					<input type="button" value="${app.strings.ok}" onclick="app.ui.elements['power_buttons_${key}'].action()"/>
-					<input type="button" value="${app.strings.cancel.u()}" onclick="app.ui.overlay.modal.cancel({},true)"/>`,
-					["text_center"]
-				);
+					<h2><span id="power_button_timer">10</span> seconds</h2>`,
+					buttons: [
+						{text: app.strings.ok, 			action: app.ui.elements[`power_buttons_${key}`].action},
+						{text: app.strings.cancel.u(),	action: () => {app.ui.overlay.modal.cancel({}, true)}}
+					]
+				});
 
 				app.ui.overlay.modal.state.timer.add(() => {
 					var timer = document.querySelector('#power_button_timer');
@@ -400,41 +401,75 @@ app.ui = {
 				app.ui.elements.background.classList.remove("blur");
 			},
 
-			create: function (title_text = "Demo Title", content_html = "demo", addional_classes = []) {
+			create: function (options) {
 				app.ui.elements.overlay.style.display = "flex";
 
-				addional_classes.push("modal");
-				app.ui.elements.modal = app.utils.createEWC("div", addional_classes);
-				app.ui.elements.overlay.appendChild(app.ui.elements.modal);
-				
-				var title = app.utils.createEWC("div", ["modal_title"]);
-				title.classList.add("text_center");
-				title_text = `<h1>${title_text}</h1>`;
-				title.innerHTML = title_text;
-
-				var close_btn = app.utils.createSVG(24, 24, app.ui.icons.close);
-				close_btn.classList.add("modal_close");
-				close_btn.onclick = () => {app.ui.overlay.modal.cancel({},true)};
-				
-				var content = app.utils.createEWC("div", ["modal_content"]);
-				if(content_html == "demo"){
-					content_html = "<h2>Section</h2><p>Have a nice day.</p>";
-					for(var i = 0; i < 3; i++){
-						content_html += content_html;
-					}
+				if (!options || !options.title || !options.content) {
+					console.warn("Attempt to create empty modal.");
+					return;
 				}
-				content.innerHTML = content_html;
 
-				app.ui.elements.modal.appendChild(title);
-				app.ui.elements.modal.appendChild(close_btn);
-				app.ui.elements.modal.appendChild(content);
+				let modal = app.utils.createEWC("div", ["modal"]);
+				modal.closeAction = options.closeAction;
+				
+				modal.close = function(){
+					if (modal.closeAction){
+						modal.closeAction();
+					}
 
+					app.ui.overlay.modal.cancel({}, true);
+				}
+
+				if (!options.buttons) {
+					options.buttons = [{
+						text: "Ok",
+						action: modal.close
+					}];
+				}
+
+				modal_header = app.utils.createEWC("div", ["modal_header"]);
+				modal_footer = app.utils.createEWC("div", ["modal_footer"]);
+				modal_content = app.utils.createEWC("div", ["modal_content"]);
+
+				// Prepare Header
+				let modal_title = app.utils.createEWC("h1", ["modal_header_title"]);
+				modal_title.innerHTML = options.title;
+
+				let close_btn = app.utils.createSVG(24, 24, app.ui.icons.close);
+				close_btn.classList.add("modal_close");
+				close_btn.onclick = modal.close;
+
+				modal_header.appendChild(modal_title);
+				modal_header.appendChild(close_btn);
+
+
+				// Prepare Content
+				modal_content.innerHTML = options.content;
+
+
+				// Prepare Footer
+				options.buttons.forEach(b => {
+					let btn = app.utils.createEWC("button", ["modal_footer_button"]);
+					btn.innerHTML = b.text;
+					btn.onclick = b.action;
+
+					modal_footer.appendChild(btn);
+				});
+
+
+				modal.appendChild(modal_header);
+				modal.appendChild(modal_content);
+				modal.appendChild(modal_footer);
+				
 				app.ui.elements.container.classList.add("blur");
 				app.ui.elements.background.classList.add("blur");
 
-				app.ui.elements.overlay.addEventListener("click", app.ui.overlay.modal.cancel);
-				app.ui.elements.modal.addEventListener("mouseover", () => app.ui.overlay.modal.isMouseOnModal(true));
-				app.ui.elements.modal.addEventListener("mouseout", () => app.ui.overlay.modal.isMouseOnModal(false));
+				app.ui.elements.overlay.addEventListener("click", () => {if (!app.ui.overlay.modal.mouse_on_modal) modal.close()});
+				modal.addEventListener("mouseover", () => app.ui.overlay.modal.isMouseOnModal(true));
+				modal.addEventListener("mouseout", () => app.ui.overlay.modal.isMouseOnModal(false));
+				
+				app.ui.elements.overlay.appendChild(modal);
+				app.ui.elements.modal = modal;
 			},
 
 			cancel: function(e = {}, overrideMouseOnModal = false){
