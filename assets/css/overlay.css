@@ -23,8 +23,8 @@ div.overlay{
 	border-radius: 5px;
 	display: flex;
 	color: white;
-	flex-direction: column;
-    overflow: hidden;
+	overflow: hidden;
+	flex-wrap: wrap;
 }
 
 .modal_title > h1{
@@ -46,7 +46,6 @@ div.overlay{
 }
 
 .modal_content{
-	flex: 1 0 100%;
     overflow: auto;
     margin: 10px 0px;
     padding: 0px 10px;
@@ -126,6 +125,10 @@ section > h2{
 
 .text_center {
 	text-align: center;
+}
+
+.modal_header, .modal_content, .modal_footer{
+    flex: 1 100%;
 }
 
 .modal_header{
