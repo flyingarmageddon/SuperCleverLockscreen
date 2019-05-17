@@ -12,7 +12,7 @@ app.weather = {
 
 	init: function(){
 		if (!app.storage.get("weather.api_key")){
-			console.warn("Warning! Open Weather API Key not provided! Weather could not be enabled.");
+			alert("Warning! Open Weather API Key not provided! Weather could not be enabled.");
 			return false;
 		}
 
@@ -58,6 +58,12 @@ app.weather = {
 			alert("Warning! Open Weather API Key not provided! Weather could not be enabled.");
 			return;
 		}
+		if (!navigator.onLine){
+			console.log("Warning! No internet connection! Weather could not be updated. Retry in 5 seconds...");
+			setTimeout(() => app.weather.updateForecast(true, true, true), 5000);
+			app.weather.new_data = false
+			return;
+		}
 		var url = `http://api.openweathermap.org/data/2.5/forecast/daily?`
 		url += `q=${app.storage.get("weather.location")}`
 		url +=	`&mode=json`
@@ -71,7 +77,7 @@ app.weather = {
 			if (request.readyState == 4) {
 
 				if (request.status != 200){
-					console.log(`Failed to get weather data from openweathermap, code:${request.status}. Retry in 5 second...`)
+					console.log(`Failed to get weather data from openweathermap, code:${request.status}. Retry in 5 seconds...`)
 					setTimeout(() => app.weather.updateForecast(true, true, true), 5000);
 					app.weather.new_data = false;
 					return;
