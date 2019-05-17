@@ -12,7 +12,11 @@ app.weather = {
 
 	init: function(){
 		if (!app.storage.get("weather.api_key")){
-			alert("Warning! Open Weather API Key not provided! Weather could not be enabled.");
+			alert(
+				app.strings.warning.u() + "! " +
+				app.strings.phrases.api_key_missing.u() + " Open Weather Map. " +
+				app.i18n.stringBuilder(["phrases.api_key_required", "settings.weather_forecast"]).u() + "."
+			);
 			return false;
 		}
 
@@ -55,7 +59,11 @@ app.weather = {
 
 	getForecast: function(){
 		if (app.settings.data.weather.api_key == ""){
-			alert("Warning! Open Weather API Key not provided! Weather could not be enabled.");
+			alert(
+				app.strings.warning.u() + "! " +
+				app.strings.phrases.api_key_missing.u() + " Open Weather Map. " +
+				app.i18n.stringBuilder(["phrases.api_key_required", "settings.weather_forecast"]).u() + "."
+			);
 			return;
 		}
 		if (!navigator.onLine){
