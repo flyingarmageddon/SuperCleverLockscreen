@@ -15,11 +15,8 @@ app.i18n = {
 		your:						"swój",
 		yours:						"swoje",
 
-		warning:					"uwaga",
+		warning:					"ostrzeżenie",
 		error:						"błąd",
-
-		openweathermap:				"OpenWeatherMap",
-
 		
 		phrases: {
 			are_you_sure:			"czy na pewno chcesz",
@@ -95,8 +92,6 @@ app.i18n = {
 
 		warning:					"warning",
 		error:						"error",
-
-		openweathermap:				"OpenWeatherMap",
 		
 		phrases: {
 			are_you_sure:			"are you sure you want",

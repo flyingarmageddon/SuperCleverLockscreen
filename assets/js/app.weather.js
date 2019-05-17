@@ -12,11 +12,17 @@ app.weather = {
 
 	init: function(){
 		if (!app.storage.get("weather.api_key")){
-			alert(
-				app.strings.warning.u() + "! " +
-				app.strings.phrases.api_key_missing.u() + " Open Weather Map. " +
-				app.i18n.stringBuilder(["phrases.api_key_required", "settings.weather_forecast"]).u() + "."
-			);
+			app.ui.overlay.modal.create({
+				"title": app.strings.warning.u(),
+				"content":
+					app.strings.phrases.api_key_missing.u() + " Open Weather Map.  " +
+					app.i18n.stringBuilder(["phrases.api_key_required", "settings.weather_forecast"]).u() + ".",
+				"buttons": [
+					{ text: app.strings.ok, action: () => { app.ui.overlay.modal.cancel({}, true);} },
+					{ text: app.strings.settings.settings.u(), action: () => { app.ui.overlay.modal.cancel({}, true); app.settings.createModal() } }
+				]
+
+			});
 			return false;
 		}
 
@@ -59,11 +65,17 @@ app.weather = {
 
 	getForecast: function(){
 		if (app.settings.data.weather.api_key == ""){
-			alert(
-				app.strings.warning.u() + "! " +
-				app.strings.phrases.api_key_missing.u() + " Open Weather Map. " +
-				app.i18n.stringBuilder(["phrases.api_key_required", "settings.weather_forecast"]).u() + "."
-			);
+			app.ui.overlay.modal.create({
+				"title": app.strings.warning.u(),
+				"content":
+					app.strings.phrases.api_key_missing.u() + " Open Weather Map.  " +
+					app.i18n.stringBuilder(["phrases.api_key_required", "settings.weather_forecast"]).u() + ".",
+				"buttons": [
+					{ text: app.strings.ok, action: () => { app.ui.overlay.modal.cancel({}, true); } },
+					{ text: app.strings.settings.settings.u(), action: () => { app.ui.overlay.modal.cancel({}, true); app.settings.createModal() } }
+				]
+
+			});
 			return;
 		}
 		if (!navigator.onLine){
