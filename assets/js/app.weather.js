@@ -78,13 +78,28 @@ app.weather = {
 			});
 			return;
 		}
-		if (!navigator.onLine){
-			console.log("Warning! No internet connection! Weather could not be updated. Retry in 5 seconds...");
-			setTimeout(() => app.weather.updateForecast(true, true, true), 5000);
-			app.weather.new_data = false
-			return;
-		}
-		var url = `http://api.openweathermap.org/data/2.5/forecast/daily?`
+
+		// # Notice about catching no internet connection
+		// # 1. Linux don't want connect to internet on startup.
+		// #    And then webkit throw an error (prompt) which is not good for users.
+		// #    And this error is thown from webkit (even if you catch it in js).
+		// #    1. So the first what you think is check if navigator.isOnline
+		// #       before webkit will try to do request. And it's perfect...but not here.
+		// #       For now in webkit2 navigator.onLine always retrun true. Acually it's not
+		// #       a bug (some browsers do so). Unfortunetly for us.
+		// #    2. You can try to catch but it's not error from js.
+		// #    3. Using a onerror not prevent from throwing error, you can try to "ping" with img.src
+		// #       something but same as in request you get an error.
+		// #	4. Did i mentioned that in webkit2 the error is not NO_INTERNET_CONNECTION but
+		// #	Error resolving 'api.openweathermap.org': Temporary failure in name resolution
+		// #	I test it befeore in firefox (my bad) and in chrome (my bad++) so i realized afrer I
+		// #	think that i fixed it.
+		// #	And what is the solution...change domains to ips and thats it...
+		// #	You get diffrent error but...it's somehow whitelisted and wouldn't throw alert with
+		// #	theme error! It's not good but well...it's working for now.	
+
+		//var url = `http://api.openweathermap.org/data/2.5/forecast/daily?`
+		var url = `http://37.139.20.5/data/2.5/forecast/daily?`
 		url += `q=${app.storage.get("weather.location")}`
 		url +=	`&mode=json`
 		url +=	`&units=${app.storage.get("weather.units")}`
@@ -97,7 +112,11 @@ app.weather = {
 			if (request.readyState == 4) {
 
 				if (request.status != 200){
-					console.log(`Failed to get weather data from openweathermap, code:${request.status}. Retry in 5 seconds...`)
+					if (request.status == 0){
+						console.log(`Failed to get weather data, no internet connection. Retry in 5 seconds...`)
+					} else {
+						console.log(`Failed to get weather data from openweathermap, code:${request.status}. Retry in 5 seconds...`)
+					}
 					setTimeout(() => app.weather.updateForecast(true, true, true), 5000);
 					app.weather.new_data = false;
 					return;
