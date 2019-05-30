@@ -61,25 +61,21 @@ app.utils = {
 	getRelativeDay: function(timestamp){
 		var now = new Date();
 		var date = new Date(parseInt(timestamp) * 1000);
-		var year_diff = date.getFullYear() - now.getFullYear();
-		var month_diff = date.getMonth() - now.getMonth();
-		var day_diff = date.getDate() - now.getDate();
+		var day_diff = Math.floor((date - now)/60/60/24/1000)
 
-		if(year_diff == 0 && month_diff == 0){
-			switch (day_diff) {
-				case -1:
-					return app.strings.days.yesterday.u();
-				case 0:
-					return app.strings.days.today.u();
-				case 1:
-					return app.strings.days.tomorrow.u();
-				default:
-					if(day_diff <= 7){
-						day = app.utils.getTime(timestamp);
-						return day.week_day;
-					}
-					return date.getDate();
-			}
+		switch (day_diff) {
+			case -1:
+				return app.strings.days.yesterday.u();
+			case 0:
+				return app.strings.days.today.u();
+			case 1:
+				return app.strings.days.tomorrow.u();
 		}
+		if (day_diff > 1 && day_diff <= 7){
+			day = app.utils.getTime(timestamp);
+			return day.week_day;
+		}
+		//past or more than week
+		return String(date.getDate()).padStart(2, '0') + "." + String(date.getMonth()).padStart(2, '0');
 	}
 };
