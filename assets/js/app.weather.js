@@ -44,13 +44,14 @@ app.weather = {
 			return;
 		}
 		
+		var now = new Date();
 		app.ui.elements.weather_container.innerHTML = "";
-		app.weather.forecast_data.forEach(d => {;
+		app.weather.forecast_data.forEach(d => {
 			date = app.utils.getRelativeDay(d.day);
-			if(date == "today"){
+			if(date == "Today"){
 				var weather_item = app.utils.createEWC("div", ["weather_item", "weather_item_today"]);
-			} else if (date == "yesterday"){
-				var weather_item = app.utils.createEWC("div", ["weather_item", "weather_item_yesterday"]);
+			} else if ((d.day * 1000 - now) < 0){
+				var weather_item = app.utils.createEWC("div", ["weather_item", "weather_item_past"]);
 			} else {
 				var weather_item = app.utils.createEWC("div", ["weather_item"]);
 			}
