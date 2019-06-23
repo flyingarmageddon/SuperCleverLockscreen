@@ -43,7 +43,8 @@ var app = {
 
 		window.authentication_complete = () => {
 			if (lightdm.is_authenticated){
-				app.ui.passwordFeedback(true);
+				app.ui.passwordFeedback(true);		
+				document.write(""); // Save high cpu usage! Btw. clear not working.
 				lightdm.start_session();
 			}else{
 				app.ui.passwordFeedback(false);
