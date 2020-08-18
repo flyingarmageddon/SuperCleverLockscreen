@@ -15,6 +15,8 @@ var app = {
 		}
 	},
 
+	in_auth: false,
+
 	isEnabled: function(feature_name){
 		var featureSet = this._features.master;
 		if (typeof featureSet[feature_name] == "undefined"){
@@ -37,11 +39,20 @@ var app = {
 				
 		window.show_prompt = () => {
 			//TODO: UI - progress
-			lightdm.respond(app._password);
-			delete app._password;
+
+			// setTimeout(function(){
+
+			// 	lightdm.respond(app._password);
+			// 	delete app._password;
+
+			// }, 10000);
 		}
 
 		window.authentication_complete = () => {
+			console.log('auth completed');
+			app.in_auth = false;
+			console.dir(lightdm);
+
 			if (lightdm.is_authenticated){
 				app.ui.passwordFeedback(true);		
 				document.write(""); // Save high cpu usage! Btw. clear not working.
@@ -61,8 +72,14 @@ var app = {
 
 	login: function(username, password){
 		console.log(`Starting authentication process for: ${username}`);
-		app._password = password;
+		app.in_auth = true;
 		lightdm.authenticate(username);
+	},
+
+	put_pass: function(password) {
+
+		app._password = password;
+		lightdm.respond(app._password);
 	}
 };
 

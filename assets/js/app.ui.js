@@ -171,6 +171,13 @@ app.ui = {
 			
 			user_password.addEventListener("keyup", function(event) {
 				if (event.keyCode === 13) {
+					
+					if (app.in_auth) {
+
+						app.put_pass(this.value);
+						return;
+					}
+					
 					userData = this.parentElement.userData;
 					if (userData.another_user){
 						app.login(userData.user_element.value, this.value);
