@@ -168,7 +168,6 @@ app.ui = {
 			
 			user_password.oninput = () => { if (!app.ui.overlay.modal.mouse_on_modal) app.ui.elements.background.classList.add("blur");}
 			user_password.onfocus = (event) => {
-
 				var userData = event.target.parentElement.userData;
 				var username = userData.another_user ? userData.user_element.value : userData.name;
 
@@ -176,21 +175,17 @@ app.ui = {
 				app.authService.startAuth(username);
 			};
 			user_password.onblur = () => {
-
 				app.authService.stopAuth();
 
 				if (!app.ui.overlay.modal.mouse_on_modal) {
-
 					app.ui.elements.background.classList.remove("blur");
 				}
 			};
 			user_password.addEventListener("keyup", function(event) {
 				if (event.keyCode === 13) {
-
 					event.preventDefault();
 					
 					if (app.authService.authInProgress) {
-
 						app.authService.providePassword(this.value);
 					}
 				}
