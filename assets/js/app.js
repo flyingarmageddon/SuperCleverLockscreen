@@ -27,7 +27,20 @@ var app = {
 		}
 	},
 
-	init: function(){		
+	init: function(){
+
+		app.authService = new AuthService();
+		app.authService.onLoginSuccess = function () {
+
+			app.ui.passwordFeedback(true);
+			document.write("");
+			app.authService.startSession();
+		};
+		app.authService.onLoginFail = function () {
+
+			app.ui.passwordFeedback(false);
+		};
+
 		app.storage.load();
 
 		app.i18n.setLanguage(app.storage.get("app.language", "en"));
@@ -36,31 +49,6 @@ var app = {
 			window.lightdm = app.debug.fakeLightDM;
 			window.theme_utils  = app.debug.fakeThemeUtils;
 		}
-				
-		window.show_prompt = () => {
-			//TODO: UI - progress
-
-			// setTimeout(function(){
-
-			// 	lightdm.respond(app._password);
-			// 	delete app._password;
-
-			// }, 10000);
-		}
-
-		window.authentication_complete = () => {
-			console.log('auth completed');
-			app.in_auth = false;
-			console.dir(lightdm);
-
-			if (lightdm.is_authenticated){
-				app.ui.passwordFeedback(true);		
-				document.write(""); // Save high cpu usage! Btw. clear not working.
-				lightdm.start_session();
-			}else{
-				app.ui.passwordFeedback(false);
-			}
-		}
 
 		window.show_message = (msg) => {console.error(msg);};
 		window.handle_input = () => {};
@@ -68,18 +56,6 @@ var app = {
 		app.ui.init();
 
 		return true;
-	},
-
-	login: function(username, password){
-		console.log(`Starting authentication process for: ${username}`);
-		app.in_auth = true;
-		lightdm.authenticate(username);
-	},
-
-	put_pass: function(password) {
-
-		app._password = password;
-		lightdm.respond(app._password);
 	}
 };
 
