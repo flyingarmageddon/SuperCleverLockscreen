@@ -27,17 +27,14 @@ var app = {
 		}
 	},
 
-	init: function(){
-
+	init: function() {
 		app.authService = new AuthService();
 		app.authService.onLoginSuccess = function () {
-
 			app.ui.passwordFeedback(true);
 			document.write("");
 			app.authService.startSession();
 		};
 		app.authService.onLoginFail = function () {
-
 			app.ui.passwordFeedback(false);
 		};
 

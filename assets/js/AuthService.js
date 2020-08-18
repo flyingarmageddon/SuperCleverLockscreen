@@ -4,7 +4,6 @@
 class AuthService {
 
 	constructor() {
-
 		this.username = null;
 		this.authInProgress = false;
 		this.authenticated = false;
@@ -15,7 +14,6 @@ class AuthService {
 
 		window.show_prompt = function() {};
 		window.authentication_complete = function() {
-
 			_this.authCompleteCallback();
 		}
 	}
@@ -26,9 +24,7 @@ class AuthService {
 	 * @param {string} username username
 	 */
 	startAuth(username) {
-
 		if (!this.authInProgress && !this.authenticated) {
-
 			console.log(`Starting auth for ${username}`);
 
 			this.username = username;
@@ -41,9 +37,7 @@ class AuthService {
 	 * Stop user auth process
 	 */
 	stopAuth() {
-		
 		if (this.authInProgress) {
-
 			console.log(`Stopping auth for ${this.username}`);
 
 			this.authInProgress = false;
@@ -55,15 +49,11 @@ class AuthService {
 	 * Called on auth complete by lightdm.
 	 */
 	authCompleteCallback() {
-
 		if (lightdm.is_authenticated) {
-
 			this.authInProgress = false;
 			this.authenticated = true;
 			this.onLoginSuccess();
-
 		} else {
-
 			this.onLoginFail();
 		}
 	}
@@ -74,9 +64,7 @@ class AuthService {
 	 * @param {string} password user password
 	 */
 	providePassword(password) {
-
 		if (this.authInProgress && !this.authenticated) {
-
 			console.log(`Providing password for user ${this.username}`);
 			lightdm.respond(password);
 		}
@@ -86,9 +74,7 @@ class AuthService {
 	 * Start session for authenticated user
 	 */
 	startSession() {
-
 		if (this.authenticated) {
-
 			console.log(`Starting session for user ${this.username}`);
 			lightdm.start_session();
 		}
