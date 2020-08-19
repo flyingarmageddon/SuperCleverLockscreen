@@ -62,7 +62,7 @@ app.debug = {
 		},
 		users: [
 			{ name: "test_user", display_name: "Test User", image: null, logged_in: true },
-			{ name: "test_autologin", display_name: "Test Autologin", image: "http://placekitten.com/300/300", logged_in: false }
+			{ name: "test_autologin", display_name: "Test Autologin", image: "https://placekitten.com/300/300", logged_in: false }
 		]
 	},
 
