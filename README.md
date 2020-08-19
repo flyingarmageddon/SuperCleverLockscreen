@@ -1,5 +1,5 @@
 # Super Clever Lockscreen
-Super Clever Lockscreen is a linux lockscreen based on [lightdm-webkit2-greeter](https://github.com/Antergos/web-greeter). **Online demo available [here](https://flyingarmageddon.gitlab.io/supercleverlockscreen/)**!
+Super Clever Lockscreen is a linux lockscreen based on [lightdm-webkit2-greeter](https://github.com/Antergos/web-greeter). **Check out live demo [here](https://flyingarmageddon.gitlab.io/supercleverlockscreen/)**!
 
 Key features:
 - multiple backgrounds,
