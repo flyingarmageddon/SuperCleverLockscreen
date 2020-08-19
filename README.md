@@ -7,7 +7,7 @@ Key features:
 - ~~weather forecast~~ (in progress),
 - easy-to-use installer.
 
-Note: lockscreen is still in dev :)
+Note: lockscreen is still in development. Not all features are fully functional :)
 
 
 ## Installation & use
