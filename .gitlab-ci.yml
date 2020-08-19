@@ -2,7 +2,7 @@ pages:
   script:
     - mkdir public
     - cp -r assets public/assets
-    - cp -r index.html public/index.html
+    - cp index.html public/index.html
   artifacts:
     paths:
       - public
