@@ -20,7 +20,7 @@ Note: lockscreen is still in dev :)
 
 2. **lightdm-webkit2-greeter**:  
   2.1 Install using [this instruction](https://software.opensuse.org/download.html?project=home:antergos&package=lightdm-webkit2-greeter).  
-  2.2 Change greeter:
+  2.2 Change default greeter:
     - **quick way**: execute these commands:
     ```
       sudo sed -i "/greeter-session/s/=[.*]/=lightdm-webkit2-greeter/" /etc/lightdm/lightdm.conf && \
