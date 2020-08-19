@@ -14,7 +14,7 @@ Note: lockscreen is still in dev :)
 ### Requirements
 
 1. **lightdm**:  
-  If you are using debian you have it already.  
+  If you are using debian then you probably already have it.  
   1.1. Install: `sudo apt install lightdm`.  
   1.2. Change display manger to lightdm: `sudo dpkg-reconfigure lightdm` (ok and next select *lightdm*).  
 
