@@ -35,7 +35,7 @@ Note: lockscreen is still in dev :)
 
 
 ### Installation
-**Before it, check whether if you have all packages from *requirements (above).*** Simplest way to apply theme is to run **install.sh** script. Script will just copy all files to themes folder and set theme to default (based on user selection).
+**Before it, check whether if you have all packages from *requirements (above).*** Simplest way to apply theme is to run **install.sh** script. This script will copy all required files to themes folder and set this theme as default (based on user selection).
 
 ### Usage
 Theme should be applied after reboot. If something went wrong and you are not able to
