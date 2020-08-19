@@ -1,0 +1,8 @@
+pages:
+  script:
+    - mkdir public
+    - cp -r assets public/assets
+    - cp index.html public/index.html
+  artifacts:
+    paths:
+      - public
