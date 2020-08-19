@@ -16,7 +16,7 @@ Note: lockscreen is still in dev :)
 1. **lightdm**:  
   If you are using debian then you probably already have it.  
   1.1. Install: `sudo apt install lightdm`.  
-  1.2. Change display manger to lightdm: `sudo dpkg-reconfigure lightdm` (ok and next select *lightdm*).  
+  1.2. Change display manger to lightdm: `sudo dpkg-reconfigure lightdm` (select `lightdm` from list of display managers).  
 
 2. **lightdm-webkit2-greeter**:  
   2.1 Install using [this instruction](https://software.opensuse.org/download.html?project=home:antergos&package=lightdm-webkit2-greeter).  
