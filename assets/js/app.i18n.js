@@ -20,6 +20,7 @@ app.i18n = {
 		
 		phrases: {
 			are_you_sure:			"czy na pewno chcesz",
+			do_not_show_again:		"nie pokazuj więcej",
 			api_key_missing:		"brak klucza api do",
 			api_key_required:		"klucz jest wymagany do działania"
 		},
@@ -95,6 +96,7 @@ app.i18n = {
 		
 		phrases: {
 			are_you_sure:			"are you sure you want",
+			do_not_show_again:		"do not show again",
 			api_key_missing: 		"no api key for",
 			api_key_required: 		"api key is required for"
 		},

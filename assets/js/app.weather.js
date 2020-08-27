@@ -11,24 +11,55 @@ app.weather = {
 	],
 
 	init: function(){
-		if (!app.storage.get("weather.api_key")){
-			app.ui.overlay.modal.create({
-				"title": app.strings.warning.u(),
-				"content":
-					app.strings.phrases.api_key_missing.u() + " Open Weather Map.  " +
-					app.i18n.stringBuilder(["phrases.api_key_required", "settings.weather_forecast"]).u() + ".",
-				"buttons": [
-					{ text: app.strings.ok, action: () => { app.ui.overlay.modal.cancel({}, true);} },
-					{ text: app.strings.settings.settings.u(), action: () => { app.ui.overlay.modal.cancel({}, true); app.settings.createModal() } }
-				]
-
-			});
+		if (!app.storage.get("weather.api_key")) {
+			if (!app.storage.get("weather.api_key_dismiss", false)) {
+				app.ui.overlay.modal.create({
+					"title": app.strings.warning.u(),
+					"content_element": app.weather.getNoKeyPromptContent(),
+					"buttons": [
+						{ text: app.strings.ok, action: () => { app.ui.overlay.modal.cancel({}, true);} },
+						{ text: app.strings.settings.settings.u(), action: () => { app.ui.overlay.modal.cancel({}, true); app.settings.createModal() } }
+					],
+				});
+			}
+			
 			return false;
 		}
 
 		app.weather.updateForecast();
-		app.weather.renderForecast();	
-	}, 
+		app.weather.renderForecast();
+	},
+
+	getNoKeyPromptContent: function() {
+		let modal_root = document.createElement("div"); 
+		let modal_msg = document.createElement("p");
+		modal_msg.innerText = app.strings.phrases.api_key_missing.u() + " Open Weather Map. ";
+		modal_msg.innerText += app.i18n.stringBuilder(["phrases.api_key_required", "settings.weather_forecast"]).u();
+		modal_msg.innerText += ".";
+
+		let modal_do_not_show = app.utils.createEWC("label", ["row"]);
+
+		let checkbox_div = app.utils.createEWC("div", ["lcontainer"]);
+		let checkbox = document.createElement('input');
+		checkbox.type = 'checkbox';
+		checkbox.onchange = function() {
+			app.storage.set("weather.api_key_dismiss", checkbox.checked);
+		};
+		let nice_checkbox = app.utils.createEWC("span", ["checkmark"]);
+		checkbox_div.appendChild(checkbox);
+		checkbox_div.appendChild(nice_checkbox);
+
+		let label = app.utils.createEWC("span", []);
+		label.innerText = app.strings.phrases.do_not_show_again.u();
+
+		modal_do_not_show.appendChild(checkbox_div);
+		modal_do_not_show.appendChild(label);
+		
+		modal_root.appendChild(modal_msg);
+		modal_root.appendChild(modal_do_not_show);
+
+		return modal_root;
+	},
 
 	isValidData: function (params) {
 		var love = "";
