@@ -1,0 +1,29 @@
+.weather_container{
+	display: flex;
+}
+
+.weather_item{
+	text-align: center;
+    font-size: 0.85em;
+	padding: 5px;
+	color: rgba(255, 255, 255, 0.671);
+    flex-basis: inherit;
+}
+
+.weather_item:not(:last-of-type){
+    border-right: 1px solid rgba(255, 255, 255, 0.397);
+}
+
+.weather_item_today{
+	font-weight: bold;
+	color: rgba(255, 255, 255, 0.911);
+}
+
+.weather_item_past{
+	color: rgba(255, 255, 255, 0.285);
+}
+
+.weather_temp{
+    font-size: 1.5em;
+    margin-bottom: -3px;
+}

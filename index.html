@@ -1,28 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Super Clever Lockscreen</title>
-	<link rel="stylesheet" href="assets/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Super Clever Lockscreen</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        .container::before { content: "No theme selected"; }
+    </style>
+    <link id="theme_selection" rel="stylesheet" href="assets/css/themes/simple/style.css">
 </head>
+
 <body>
-	<div class="container">
-		<div class="login_area"></div>
-		<div class="info_bar"></div>
-	</div>
-	<div class="background"></div>
-	<div class="overlay"></div>
-	<script src="assets/js/AuthService.js"></script>
-	<script src="assets/js/app.js"></script>
-	<script src="assets/js/app.storage.js"></script>
-	<script src="assets/js/app.i18n.js"></script>
-	<script src="assets/js/app.ui.js"></script>
-	<script src="assets/js/app.utils.js"></script>
-	<script src="assets/js/app.debug.js"></script>
-	<script src="assets/js/app.weather.js"></script>
-	<script src="assets/js/app.settings.js"></script>
-	<script src="assets/js/customselect.js"></script>
+    <div class="container">
+        <div class="login_area"></div>
+        <div class="info_bar"></div>
+    </div>
+    <div class="background"></div>
+    <div class="overlay"></div>
+    <script src="assets/js/AuthService.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/app.storage.js"></script>
+    <script src="assets/js/app.i18n.js"></script>
+    <script src="assets/js/app.ui.js"></script>
+    <script src="assets/js/app.utils.js"></script>
+    <script src="assets/js/app.debug.js"></script>
+    <script src="assets/js/app.weather.js"></script>
+    <script src="assets/js/app.settings.js"></script>
+    <script src="assets/js/customselect.js"></script>
 </body>
+
 </html>

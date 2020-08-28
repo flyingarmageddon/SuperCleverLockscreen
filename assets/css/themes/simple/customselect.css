@@ -1,0 +1,108 @@
+/* The container must be positioned relative: */
+
+.custom-select {
+	position: relative;
+    box-shadow: 0 0.3px 0.9px rgba(0, 0, 0, 0.108), 0 1.6px 3.6px rgba(0, 0, 0, 0.132);
+    border-radius: 2px;
+    margin-right: 10px;
+}
+
+.custom-select select {
+	display: none;
+}
+
+.select-selected {
+    background-color: #249e37;
+}
+
+/* Style the arrow inside the select element: */
+
+.select-selected:after {
+	position: absolute;
+	content: "";
+    top: 50%;
+	right: 10px;
+	width: 0;
+	height: 0;
+	border: 6px solid transparent;
+	border-color: #fff transparent transparent transparent;
+	transform: translateY(-25%) rotate(0deg);
+	transition: 0.3s transform ease;
+}
+
+/* Point the arrow upwards when the select box is open (active): */
+.select-selected.select-arrow-active:after {
+	/* border-color: transparent transparent #fff transparent; */
+    /* top: calc(50% - 8px); */
+    transform: translateY(-75%) rotate(180deg);
+}
+
+/* style the items (options), including the selected item: */
+
+.select-items div, .select-selected {
+	color: #ffffff;
+	padding: 8px 16px;
+	border: 1px solid transparent;
+	border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+	cursor: pointer;
+}
+
+/* Style items (options): */
+
+.select-items {
+	position: absolute;
+    background-color: #1c7a2b;
+	top: 100%;
+	left: 0;
+	right: 0;
+	z-index: 99;
+    max-height: 999px;
+	overflow: hidden;
+    /* transition: 0.5s all ease-in; */
+}
+
+.select-items.select-hide {
+    max-height: 0;
+    /* transition: 0.3s all ease-out; */
+}
+
+/* Hide the items when the select box is closed: */
+
+.select-hide {
+	/* display: none; */
+}
+
+.select-items div:hover, .same-as-selected {
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+.custom-select {
+    box-shadow: none;
+    border-radius: 0;
+    width: 180px;
+}
+
+.select-selected {
+    background-color: #28552f;
+    font-size: 0.9em;
+    font-weight: 400;
+    border-color: transparent;
+    border-radius: 5px;
+}
+
+.select-items {
+    font-weight: 400;
+    font-size: 0.9em;
+}
+
+.select-items div, .select-selected {
+    display: flex;
+    padding: 4px;
+    border: 1px solid transparent;
+    border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+}
+
+.select-selected.select-arrow-active{
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}

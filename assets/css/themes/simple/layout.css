@@ -1,0 +1,75 @@
+.container{
+	display: flex;
+	align-items: stretch;
+	width: 100%;
+	height: 100vh;
+	filter: blur(0px);
+	transition: 0.5s filter ease;
+	-webkit-transition: 0.5s -webkit-filter ease;
+}
+
+.login_area{
+	flex: 3;
+	display: flex;	
+	flex-direction: column;
+	justify-content: center;
+}
+
+.info_bar{
+	flex: 1;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	max-width: 400px;
+	box-sizing: border-box;
+	padding: 10px;
+	color: white;
+	position: relative;
+}
+
+.info_bar > div, .info_bar > section{
+	/* flex: 1 0 100%; */
+}
+
+.power_buttons_container{
+	align-self: flex-end;
+	display: inline-flex;
+	justify-content: center;
+	margin-bottom: 20px;
+	flex-wrap: wrap;
+
+	background: #000000DD;
+	border-radius: 25px 0 0 25px;
+	position: absolute;
+	right: 0;
+	transform: translateX(80%);
+	transition: 0.1s all;
+	overflow: hidden;
+}
+
+.power_buttons_container:hover {
+	transform: translateX(0%);
+}
+
+.power_button{
+	height: 1.6em;
+	padding: 8px 8px;
+	cursor: pointer;
+	filter: brightness(75%);
+	transition: 0.2s all ease;
+	/* -webkit-transition: 0.2s -webkit-filter ease; */
+	fill: white;
+}
+
+.power_button:hover{
+	filter: brightness(100%);
+	background: rgb(0, 90, 173);
+}
+
+.hostname{
+	color: rgba(255, 255, 255, 0.7);
+	font-size: 1.2em;
+	margin: 5px 40px;
+	flex: 1 100%;
+	text-align: center;
+}

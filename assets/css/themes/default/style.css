@@ -1,0 +1,25 @@
+@import "fonts.css";
+@import "users.css";
+@import "clock.css";
+@import "background.css";
+@import "overlay.css";
+@import "layout.css";
+@import "weather.css";
+@import "effects.css";
+@import "radio.css";
+@import "customselect.css";
+
+html, body{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	color: #222;
+	line-height: 1.3;
+	font-family: 'PT Sans', sans-serif;
+    text-rendering: geometricPrecision;
+}
+
+
+.container::before { content: unset; }
