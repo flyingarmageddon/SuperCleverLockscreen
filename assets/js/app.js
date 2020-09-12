@@ -15,7 +15,7 @@ var app = {
 		}
 	},
 
-	in_auth: false,
+	demoMode: false,
 
 	isEnabled: function(feature_name){
 		var featureSet = this._features.master;
@@ -43,8 +43,13 @@ var app = {
 		app.i18n.setLanguage(app.storage.get("app.language", "en"));
 		
 		if (typeof window.lightdm == "undefined"){
+			this.demoMode = true;
 			window.lightdm = app.debug.fakeLightDM;
 			window.theme_utils  = app.debug.fakeThemeUtils;
+			
+			if(app.storage.get("weather.api_key", '') == '') {
+				app.storage.set("weather.api_key", "put-real-key-to-see-real-weather");
+			}
 		}
 
 		window.show_message = (msg) => {console.error(msg);};

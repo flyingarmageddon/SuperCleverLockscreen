@@ -2,13 +2,7 @@ app.weather = {
 
 	new_data: "not a object",
 
-	forecast_data: [
-		{ day: "I ", temp: null, text: "????" },
-		{ day: "use ", temp: null, text: "????" },
-		{ day: "debian ", temp: null, text: "????" },
-		{ day: "btw", temp: null, text: "????" },
-		{ day: ".", temp: null, text: "????" }
-	],
+	forecast_data: [],
 
 	init: function(){
 		if (!app.storage.get("weather.api_key")) {
@@ -130,12 +124,18 @@ app.weather = {
 		// #	You get diffrent error but...it's somehow whitelisted and wouldn't throw alert with
 		// #	theme error! It's not good but well...it's working for now.	
 
-		//var url = `http://api.openweathermap.org/data/2.5/forecast/daily?`
-		var url = `http://37.139.20.5/data/2.5/forecast/daily?`
-		url += `q=${app.storage.get("weather.location")}`
-		url +=	`&mode=json`
+		//var url = `http://api.openweathermap.org/data/2.5/forecast/daily?`	
+		var url = '';
+		if (app.demoMode && app.storage.get('weather.api_key', '') == 'put-real-key-to-see-real-weather') {
+			// url += `q=${app.storage.get("weather.location")}`;
+			url  = 'demo/mock/weather.json?';
+		} else {
+			url += `http://37.139.20.5/data/2.5/onecall?`;
+		}
+		url += `lat=33.441792&lon=-94.037689`;
+		url +=	`&mode=json`;
 		url +=	`&units=${app.storage.get("weather.units")}`
-		url +=	`&cnt=5`
+		url +=	`&exclude=hourly,minutely,current`;
 		url +=	`&apikey=${app.storage.get("weather.api_key")}`;
 
 		var request = new XMLHttpRequest();
@@ -155,6 +155,7 @@ app.weather = {
 				}
 				
 				app.weather.new_data = JSON.parse(request.responseText);
+				console.log(app.weather.new_data)
 				if (app.weather.new_data == null) {
 					app.weather.new_data = false;
 				}
@@ -180,16 +181,20 @@ app.weather = {
 			return;
 		}
 		openweather_json = app.weather.new_data;
-		if (update_all == false && openweather_json.city.name.toLowerCase() != app.settings.data.weather.city){
-			update_all = true;
-		}
-		openweather_json.list.forEach((day, i) => {
-			app.weather.forecast_data[i].day = day.dt;
-			app.weather.forecast_data[i].temp = day.temp.day;
-			app.weather.forecast_data[i].sky = day.weather[0].main;
-			app.weather.forecast_data[i].humidity = day.humidity;
-			app.weather.forecast_data[i].pressure = day.pressure;
-			app.weather.forecast_data[i].wind = day.speed;
+		openweather_json.daily.forEach((day, i) => {
+			
+			if (i >= 5) {
+				return;
+			}
+
+			app.weather.forecast_data[i] = {
+				day: day.dt,
+				temp: day.temp.day,
+				sky: day.weather[0].main,
+				humidity: day.humidity,
+				pressure: day.pressure,
+				wind: day.speed
+			};
 		});
 
 		if(save_to_storage){
